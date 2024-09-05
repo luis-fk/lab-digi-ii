@@ -8,3 +8,6 @@ comp.txt
 *.out
 exp2/Modelsim/*
 !wave.do
+*.rpt
+*.qarlog
+
