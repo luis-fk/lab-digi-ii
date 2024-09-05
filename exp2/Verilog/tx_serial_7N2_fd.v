@@ -20,7 +20,7 @@
     // composicao dos dados seriais
     assign s_dados[0]   = 1'b1;             // repouso
     assign s_dados[1]   = 1'b0;             // start bit
-    assign s_dados[8:2] = dados_ascii[6:0]; // dado
+    assign s_dados[8:2] = dados_ascii[6:0]; // dado 
     assign s_dados[9]   = 1'b1;             // stop bit 1
     assign s_dados[10]  = 1'b1;             // stop bit 2
   

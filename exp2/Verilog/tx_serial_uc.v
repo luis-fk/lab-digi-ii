@@ -69,10 +69,10 @@ module tx_serial_uc (
         case (Eatual)
             inicial     : db_estado = 4'b0000; // 0
             preparacao  : db_estado = 4'b0001; // 1
-            espera      : db_estado = 4'b0011; // 3
-            transmissao : db_estado = 4'b0111; // 7
-            final_tx    : db_estado = 4'b1111; // F
-            default     : db_estado = 4'b1110; // E
+            espera      : db_estado = 4'b0010; // 2
+            transmissao : db_estado = 4'b0011; // 3
+            final_tx    : db_estado = 4'b0100; // 4
+            default     : db_estado = 4'b1111; // F
         endcase
     end
 
