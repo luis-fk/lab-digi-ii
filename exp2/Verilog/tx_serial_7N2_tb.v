@@ -76,7 +76,7 @@ module tx_serial_7N2_tb;
             // Acionamento da partida
             @(negedge clock_in);
             partida_in = 1;
-            #(25*clockPeriod); 
+            #(25*clockPeriod);
             partida_in = 0;
 
             // Espera final da transmissão

@@ -65,8 +65,8 @@ module tx_serial_7N2 (
     // fator de divisao para 9600 bauds (5208=50M/9600) 13 bits
     // fator de divisao para 115.200 bauds (434=50M/115200) 9 bits
     contador_m #(
-        .M(5208), 
-        .N(13) 
+        .M(434), 
+        .N(9) 
      ) U3_TICK (
         .clock   ( clock  ),
         .zera_as ( 1'b0   ),
