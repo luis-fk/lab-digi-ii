@@ -6,3 +6,5 @@
 comp.txt
 *.vcd
 *.out
+exp2/Modelsim/*
+!wave.do
