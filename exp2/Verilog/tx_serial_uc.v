@@ -28,11 +28,11 @@ module tx_serial_uc (
 );
 
     // Estados da UC
-    parameter inicial     = 4'b0000; 
-    parameter preparacao  = 4'b0001; 
-    parameter espera      = 4'b0011; 
-    parameter transmissao = 4'b0111; 
-    parameter final_tx    = 4'b1111;
+    parameter inicial     = 4'b0000; // 0 
+    parameter preparacao  = 4'b0001; // 1
+    parameter espera      = 4'b0010; // 2
+    parameter transmissao = 4'b0011; // 3
+    parameter final_tx    = 4'b0100; // 4
 
     // Variaveis de estado
     reg [3:0] Eatual, Eprox;
