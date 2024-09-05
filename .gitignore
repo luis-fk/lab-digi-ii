@@ -4,6 +4,5 @@
 *.qpf
 *.qsf
 comp.txt
-*.gtkw
 *.vcd
 *.out

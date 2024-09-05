@@ -1,0 +1,38 @@
+[*]
+[*] GTKWave Analyzer v3.3.100 (w)1999-2019 BSI
+[*] Thu Sep 05 17:43:12 2024
+[*]
+[dumpfile] "C:\Users\joao2\Desktop\windows\Poli (1)\Eng Comp\7° periodo\Laboratorio Digital II\Labs\Lab2\wave.vcd"
+[dumpfile_mtime] "Thu Sep 05 17:39:07 2024"
+[dumpfile_size] 252243
+[savefile] "C:\Users\joao2\Desktop\windows\Poli (1)\Eng Comp\7° periodo\Laboratorio Digital II\Labs\Lab2\a.gtkw"
+[timestart] 0
+[size] 1536 801
+[pos] -61 -61
+*-15.000000 7000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] tx_serial_7N2_tb.
+[treeopen] tx_serial_7N2_tb.dut.
+[sst_width] 197
+[signals_width] 221
+[sst_expanded] 1
+[sst_vpaned_height] 224
+@28
+tx_serial_7N2_tb.clock_in
+@200
+-uc
+@24
+tx_serial_7N2_tb.dut.U2_UC.db_estado[3:0]
+@28
+tx_serial_7N2_tb.dut.U2_UC.zera
+tx_serial_7N2_tb.dut.U2_UC.conta
+tx_serial_7N2_tb.dut.U2_UC.carrega
+tx_serial_7N2_tb.dut.U2_UC.desloca
+@200
+-fd_serial
+@23
+tx_serial_7N2_tb.dut.U1_FD.dados_ascii[6:0]
+@28
+tx_serial_7N2_tb.dut.U1_FD.saida_serial
+tx_serial_7N2_tb.dut.U1_FD.fim
+[pattern_trace] 1
+[pattern_trace] 0
