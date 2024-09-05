@@ -1,0 +1,9 @@
+contador_m_tb.v
+contador_m.v
+deslocador_n.v
+edge_detector.v
+hexa7seg.v
+tx_serial_7N2_fd.v
+tx_serial_7N2.v
+tx_serial_uc.v
+tx_serial_7N2_tb.v
