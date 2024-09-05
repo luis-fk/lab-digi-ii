@@ -28,7 +28,7 @@ module tx_serial_7N2 (
     wire       s_saida_serial ;
     wire [3:0] s_estado       ;
 
-	 // sinais reset e partida (ativos em alto - GPIO)
+	// sinais reset e partida (ativos em alto - GPIO)
     assign s_reset  = reset;
     assign s_partida = partida;
 	 

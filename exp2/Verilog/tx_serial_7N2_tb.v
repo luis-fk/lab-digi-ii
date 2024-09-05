@@ -42,7 +42,8 @@ module tx_serial_7N2_tb;
     // Geração dos sinais de entrada (estímulos)
     initial begin
         $display("Inicio da simulacao");
-
+        $dumpfile("wave.vcd");
+        $dumpvars(5, tx_serial_7N2_tb);
         // Inicialização do vetor de teste
         vetor_teste[0] = 7'b0110101;  // 35h (5)
         vetor_teste[1] = 7'b1010101;  // 55h (U)

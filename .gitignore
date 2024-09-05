@@ -1,1 +1,9 @@
 *.bak
+*db
+*output_files
+*.qpf
+*.qsf
+comp.txt
+*.gtkw
+*.vcd
+*.out
