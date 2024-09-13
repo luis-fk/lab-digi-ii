@@ -18,7 +18,7 @@ module contador_cm #(
 ) (
     input wire        clock,
     input wire        reset,
-    input wire        pulso,
+    input wire        pulso, // echo
     output wire [3:0] digito0,
     output wire [3:0] digito1,
     output wire [3:0] digito2,

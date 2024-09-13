@@ -53,7 +53,8 @@ module interface_hcsr04_tb;
     // Geração dos sinais de entrada (estímulos)
     initial begin
         $display("Inicio das simulacoes");
-
+        $dumpfile("wave.vcd");
+        $dumpvars(5, interface_hcsr04_tb);
         // Inicialização do array de casos de teste
         casos_teste[0] = 5882;   // 5882us (100cm)
         casos_teste[1] = 5899;   // 5899us (100,29cm) truncar para 100cm
@@ -106,7 +107,7 @@ module interface_hcsr04_tb;
         // Fim da simulação
         $display("Fim das simulacoes");
         caso = 99; 
-        $stop;
+        $finish;
     end
 
 endmodule

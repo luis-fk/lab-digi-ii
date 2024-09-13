@@ -26,16 +26,16 @@ module interface_hcsr04_fd (
     // Sinais internos
     wire [11:0] s_medida;
 
-    // (U1) pulso de 10us (??? clocks)
+    // (U1) pulso de 10us (500 clocks)
     gerador_pulso #(
-        .largura(/* completar */) 
+        .largura(500) 
     ) U1 (
-        .clock (clock  ),
-        .reset (/* completar */),
-        .gera  (/* completar */),
-        .para  (/* completar */), 
-        .pulso (/* completar */),
-        .pronto(/* completar */)
+        .clock (clock),
+        .reset (zera),
+        .gera  (gera),
+        .para  (), 
+        .pulso (trigger),
+        .pronto()
     );
 
     // (U2) medida em cm (R=2941 clocks)
@@ -43,25 +43,26 @@ module interface_hcsr04_fd (
         .R(2941), 
         .N(12)
     ) U2 (
-        .clock  (clock         ),
-        .reset  (/* completar */),
-        .pulso  (/* completar */),
+        .clock  (clock),
+        .reset  (zera),
+        .pulso  (pulso),
         .digito2(s_medida[11:8]),
         .digito1(s_medida[7:4] ),
         .digito0(s_medida[3:0] ),
-        .fim    (/* completar */),
-        .pronto (/* completar */)
+        .fim    (),
+        .pronto (fim_medida)
     );
+    
 
     // (U3) registrador
     registrador_n #(
         .N(12)
     ) U3 (
-        .clock  (clock    ),
-        .clear  (/* completar */),
-        .enable (/* completar */),
-        .D      (s_medida ),
-        .Q      (/* completar */)
+        .clock  (clock),
+        .clear  (zera),
+        .enable (registra),
+        .D      (s_medida),
+        .Q      (distancia)
     );
 
 endmodule

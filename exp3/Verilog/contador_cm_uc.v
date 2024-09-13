@@ -16,7 +16,7 @@
 module contador_cm_uc (
     input wire clock,
     input wire reset,
-    input wire pulso,
+    input wire pulso, // echo
     input wire tick,
     output reg zera_tick,
     output reg conta_tick,
@@ -30,11 +30,11 @@ module contador_cm_uc (
 
     // Parâmetros para os estados
 	/* completar */
-    parameter X = 3'b000;
-    parameter Y = 3'b001;
-    parameter Z = 3'b010;
-    parameter W = 3'b011;
-    parameter F = 3'b100;
+    parameter inicial    = 3'b000;
+    parameter prepara    = 3'b001; // zera tudo
+    parameter conta      = 3'b010; // conta o contador_m; muda de estado para conta_cm quando metade = 1
+    parameter conta_cm   = 3'b011; // conta cm
+    parameter fim        = 3'b100; // salva no reg
 
     // Memória de estado
     always @(posedge clock, posedge reset) begin
@@ -47,15 +47,22 @@ module contador_cm_uc (
     // Lógica de próximo estado
     always @(*) begin
         case (Eatual)
-            /* completar */
+            inicial    : Eprox = pulso ? prepara : inicial;
+            prepara    : Eprox = pulso ? conta : fim;
+            conta      : Eprox = pulso ? (tick ? conta_cm : conta) : fim;
+            conta_cm   : Eprox = pulso ? conta : fim;
+            fim        : Eprox = inicial;
         endcase
     end
 
     // Lógica de saída (Moore)
     always @(*) begin
 	
-        /* completar */
-		
+        zera_tick  = (Eatual == prepara)  ? 1'b1 : 1'b0;
+        zera_bcd   = (Eatual == prepara)  ? 1'b1 : 1'b0;
+        conta_tick = (Eatual == conta || Eatual == conta_cm)    ? 1'b1 : 1'b0;
+        conta_bcd  = (Eatual == conta_cm) ? 1'b1 : 1'b0;
+        pronto     = (Eatual == fim)      ? 1'b1 : 1'b0;
     end
 
 endmodule
