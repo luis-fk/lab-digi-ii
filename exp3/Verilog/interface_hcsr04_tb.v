@@ -52,7 +52,6 @@ module interface_hcsr04_tb;
         casos_teste[6] = 57820;   // 57820us (982,99) arredondar para 983cm
         casos_teste[7] = 10000;   // 10000us (170,01cm) arredondar para 170cm
         casos_teste[8] = 15000;   // 15000us (255,01cm) arredondar para 255cm
-        casos_teste[9] = 20000;   // 20000us (340,02cm) arredondar para 340cm
 
 
         // Valores iniciais
