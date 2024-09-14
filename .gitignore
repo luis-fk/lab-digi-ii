@@ -6,6 +6,9 @@
 *.vcd
 *.out
 exp2/Modelsim/*
+exp3/Modelsim/*
+exp4/Modelsim/*
+exp5/Modelsim/*
 !wave.do
 *.rpt
 *.qarlog
