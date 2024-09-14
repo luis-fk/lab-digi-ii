@@ -3,7 +3,6 @@
 *output_files
 *.qpf
 *.qsf
-comp.txt
 *.vcd
 *.out
 exp2/Modelsim/*
