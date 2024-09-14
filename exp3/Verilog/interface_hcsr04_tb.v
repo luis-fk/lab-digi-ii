@@ -1,17 +1,3 @@
-/* --------------------------------------------------------------------------
- *  Arquivo   : interface_hcsr04_tb.v
- * --------------------------------------------------------------------------
- *  Descricao : testbench basico para o circuito de inteface com sensor
- *              ultrassonico de distancia
- *              possui 4 casos de teste, com truncamento e arredondamento
- *              
- * --------------------------------------------------------------------------
- *  Revisoes  :
- *      Data        Versao  Autor             Descricao
- *      07/09/2024  1.0     Edson Midorikawa  versao em Verilog
- * --------------------------------------------------------------------------
- */
- 
 `timescale 1ns/1ns
 
 module interface_hcsr04_tb;
@@ -44,7 +30,7 @@ module interface_hcsr04_tb;
     always #(clockPeriod/2) clock_in = ~clock_in;
 
     // Array de casos de teste (estrutura equivalente em Verilog)
-    reg [31:0] casos_teste [0:3]; // Usando 32 bits para acomodar o tempo
+    reg [31:0] casos_teste [0:9]; // Usando 32 bits para acomodar o tempo
     integer caso;
 
     // Largura do pulso
@@ -52,14 +38,22 @@ module interface_hcsr04_tb;
 
     // Geração dos sinais de entrada (estímulos)
     initial begin
-        $display("Inicio das simulacoes");
+        // $display("Inicio das simulacoes");
         $dumpfile("wave.vcd");
         $dumpvars(5, interface_hcsr04_tb);
+        
         // Inicialização do array de casos de teste
-        casos_teste[0] = 5882;   // 5882us (100cm)
-        casos_teste[1] = 5899;   // 5899us (100,29cm) truncar para 100cm
-        casos_teste[2] = 4353;   // 4353us (74cm)
-        casos_teste[3] = 4399;   // 4399us (74,79cm) arredondar para 75cm
+        casos_teste[0] = 5882;    // 5882us (100cm)
+        casos_teste[1] = 5899;    // 5899us (100,29cm) truncar para 100cm
+        casos_teste[2] = 4353;    // 4353us (74cm)
+        casos_teste[3] = 4399;    // 4399us (74,79cm) arredondar para 75cm
+        casos_teste[4] = 58820;   // 58820us (1000cm) 
+        casos_teste[5] = 6000;    // 6000us (102cm)
+        casos_teste[6] = 57820;   // 57820us (982,99) arredondar para 983cm
+        casos_teste[7] = 10000;   // 10000us (170,01cm) arredondar para 170cm
+        casos_teste[8] = 15000;   // 15000us (255,01cm) arredondar para 255cm
+        casos_teste[9] = 20000;   // 20000us (340,02cm) arredondar para 340cm
+
 
         // Valores iniciais
         medir_in = 0;
@@ -77,7 +71,7 @@ module interface_hcsr04_tb;
         #(100_000); // 100 us
 
         // Loop pelos casos de teste
-        for (caso = 1; caso < 5; caso = caso + 1) begin
+        for (caso = 1; caso < 10; caso = caso + 1) begin
             // 1) Determina a largura do pulso echo
             $display("Caso de teste %0d: %0dus", caso, casos_teste[caso-1]);
             larguraPulso = casos_teste[caso-1]*1000; // 1us=1000
