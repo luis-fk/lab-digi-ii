@@ -14,3 +14,5 @@ interface_hcsr04_uc.v
 interface_hcsr04.v
 interface_hcsr04_tb.v
 exp3_sensor.v
+modulo_controle.v
+circuito_pwm.v

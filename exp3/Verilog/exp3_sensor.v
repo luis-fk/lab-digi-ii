@@ -18,11 +18,13 @@ module exp3_sensor (
     input wire        reset,
     input wire        medir,
     input wire        echo,
+    input wire  [1:0] posicao,
     output wire       trigger,
     output wire [6:0] hex0,
     output wire [6:0] hex1,
     output wire [6:0] hex2,
     output wire       pronto,
+    output wire       controle,
     output wire       db_medir,
     output wire       db_echo,
     output wire       db_trigger,
@@ -34,6 +36,14 @@ module exp3_sensor (
     wire        s_trigger;
     wire [11:0] s_medida ;
     wire [3:0]  s_estado ;
+
+    modulo_controle INT2 (
+        .clock      (clock  ),
+        .reset      (reset  ),
+        .posicao    (posicao),
+	    .controle   (controle),
+        .db_controle()  
+    );
 
     // Circuito de interface com sensor
     interface_hcsr04 INT (
