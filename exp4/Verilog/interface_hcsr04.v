@@ -44,15 +44,15 @@ module interface_hcsr04 (
 
     // Fluxo de dados
     interface_hcsr04_fd U2 (
-        .clock     (clock       ),
-        .pulso     (echo        ), 
-        .zera      (s_zera      ),
-        .gera      (s_gera      ),
-        .registra  (s_registra  ),
-        .fim_medida(s_fim_medida),
-        .trigger   (trigger     ),
-        .fim       (            ),  // (desconectado)
-        .distancia (s_medida    )
+        .clock     (clock          ),
+        .pulso     (echo           ), 
+        .zera      (s_zera || reset),
+        .gera      (s_gera         ),
+        .registra  (s_registra     ),
+        .fim_medida(s_fim_medida   ),
+        .trigger   (trigger        ),
+        .fim       (               ),  // (desconectado)
+        .distancia (s_medida       )
     );
 
     // Saída

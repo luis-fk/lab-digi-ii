@@ -1,53 +1,81 @@
-/* --------------------------------------------------------------------------
- *  Arquivo   : exp3_sensor.v
- * --------------------------------------------------------------------------
- *  Descricao : circuito de teste do componente interface_hcsr04.v
- *              inclui componentes para dispositivos externos
- *              detector de borda e codificadores de displays de 7 segmentos
- *
- *              usar para sintetizar projeto no Intel Quartus Prime
- * --------------------------------------------------------------------------
- *  Revisoes  :
- *      Data        Versao  Autor             Descricao
- *      07/09/2024  1.0     Edson Midorikawa  versao em Verilog
- * --------------------------------------------------------------------------
- */
- 
-module exp4_sensor_fd (
+ module exp4_sensor_fd (
     input wire         clock,
     input wire         reset,
     input wire         medir,
     input wire         echo,
+    input wire         transmitir,
+    input wire         conta,
     output wire        trigger,
-    output wire [11:0] medida,
-    output wire        pronto,
-    output wire [3:0]  estado
-
+    output wire        fim_contador,
+    output wire        fim_medicao,
+    output wire        fim_transmissao,
+    output wire [3:0]  db_estado,
+    output wire        saida_serial,
+    output wire [11:0] medida
 );
 
+wire        s_fim_transmissao;
+wire        s_sensor_pronto;
+wire        s_serial_pronto;
+wire        s_fim_medicao;
+wire        s_fim_contador;
+wire [11:0] s_medida;
+wire [6:0]  s_medida_ascii;
+wire [1:0]  s_valor_contador;
+wire [6:0]  s_mux_out;
+
+assign fim_contador = s_fim_contador;
+assign fim_transmissao = s_fim_transmissao;
+assign medida = s_medida;
+assign fim_medicao = s_fim_medicao;
+
 interface_hcsr04 INT (
-    .clock    (clock  ),
-    .reset    (reset  ),
-    .medir    (medir  ),
-    .echo     (echo   ),
-    .trigger  (trigger),
-    .medida   (medida ),
-    .pronto   (pronto ),
-    .db_estado(estado )
+    .clock    (clock        ),
+    .reset    (reset        ),
+    .medir    (medir        ),
+    .echo     (echo         ),
+    .trigger  (trigger      ),
+    .medida   (s_medida     ),
+    .pronto   (s_fim_medicao),
+    .db_estado( db_estado   )
+);
+
+contador_m #( .M(4), .N(2) ) CONT (
+    .clock  (clock           ),
+    .zera_as(),
+    .zera_s (reset           ),
+    .conta  (conta           ),
+    .Q      (s_valor_contador),
+    .fim    (s_fim_contador  ),
+    .meio   ()
+);
+
+mux_4x1_n #( .BITS(7) ) MUX (
+    .D3     (7'b111_0011     ),
+    .D2     ({ 3'b000, s_medida[3:0] }),
+    .D1     ({ 3'b000, s_medida[7:4] }),
+    .D0     ({ 3'b000, s_medida[11:8]}),
+    .SEL    (s_valor_contador),
+    .MUX_OUT(s_mux_out       )
+);
+
+binary_to_ascii BIN2ASC (
+    .binary_in(s_mux_out     ),
+    .ascii_out(s_medida_ascii)
 );
 
 tx_serial_7O1 serial (
-    clock           ,
-    reset           ,
-    partida         , // entradas
-    dados_ascii     ,
-    saida_serial    , // saidas
-    pronto          ,
-    db_clock        , // saidas de depuracao
-    db_tick         ,
-    db_partida      ,
-    db_saida_serial ,
-    db_estado 
+    .clock          (clock         ),
+    .reset          (reset         ),
+    .partida        (transmitir    ),
+    .dados_ascii    (s_medida_ascii),
+    .saida_serial   (saida_serial  ), 
+    .pronto         (s_fim_transmissao),
+    .db_clock       (), 
+    .db_tick        (),
+    .db_partida     (),
+    .db_saida_serial(),
+    .db_estado      () 
 );
     
 endmodule

@@ -1,27 +1,13 @@
-/*
- *  Arquivo   : mux_4x1_n_tb.sv
- * ----------------------------------------------------------------
- *  Descricao : testbench do modulo multiplexador 4x1  
- * 
- *  > descricao em SystemVerilog 
- *  > implementa verificacao com vetor de teste
- * 
- * ----------------------------------------------------------------
- *  Revisoes  :
- *      Data        Versao  Autor             Descricao
- *      16/09/2024  3.0     Edson Midorikawa  versao em Verilog
- * ----------------------------------------------------------------
- */
- 
 `timescale 1ns / 1ns
 
 module mux_4x1_n_tb;
 
     parameter BITS = 4;
 
-    logic [BITS-1:0] D3_IN, D2_IN, D1_IN, D0_IN;
-    logic [1:0]      SEL_IN;
+    reg [BITS-1:0] D3_IN, D2_IN, D1_IN, D0_IN;
+    reg [1:0]      SEL_IN;
     wire [BITS-1:0]  MUX_OUT;
+
 
     mux_4x1_n #(BITS) dut (
         .D3     (D3_IN  ),
@@ -32,8 +18,8 @@ module mux_4x1_n_tb;
         .MUX_OUT(MUX_OUT)
     );
 
-    logic [BITS-1:0] vetor_teste [9:0][5:0];
-
+    reg [BITS-1:0] vetor_teste [9:0][5:0];
+    integer caso;
     initial begin
         // inicializa vetor de teste com diversos casos de teste
         //                D3_IN, D2_IN, D1_IN, D0_IN, SEL_OUT, MUX_OUT (saida esperada)
@@ -51,7 +37,7 @@ module mux_4x1_n_tb;
         $display("inicio da simulacao");
 
         // percorre casos de teste
-        for (int caso = 0; caso < 10; caso++) begin
+        for (caso = 0; caso < 10; caso = caso + 1) begin
 
             // seleciona entradas presentes no vetor de teste
             D3_IN  = vetor_teste[caso][5]; 

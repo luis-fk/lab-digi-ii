@@ -13,3 +13,5 @@ exp5/Modelsim/*
 *.rpt
 *.qarlog
 *.qws
+*.txt
+!comp.txt

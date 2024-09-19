@@ -1,84 +1,75 @@
-/* --------------------------------------------------------------------------
- *  Arquivo   : exp3_sensor.v
- * --------------------------------------------------------------------------
- *  Descricao : circuito de teste do componente interface_hcsr04.v
- *              inclui componentes para dispositivos externos
- *              detector de borda e codificadores de displays de 7 segmentos
- *
- *              usar para sintetizar projeto no Intel Quartus Prime
- * --------------------------------------------------------------------------
- *  Revisoes  :
- *      Data        Versao  Autor             Descricao
- *      07/09/2024  1.0     Edson Midorikawa  versao em Verilog
- * --------------------------------------------------------------------------
- */
- 
 module exp4_sensor_uc (
-    input wire        clock,
-    input wire        reset,
-    input wire        medir,
-    input wire        echo,
-    output wire       trigger,
-    output wire [6:0] hex0,
-    output wire [6:0] hex1,
-    output wire [6:0] hex2,
-    output wire       pronto,
-    output wire       db_medir,
-    output wire       db_echo,
-    output wire       db_trigger,
-    output wire [6:0] db_estado
+    input wire       clock,
+    input wire       reset,
+    input wire       mensurar,
+    input wire       fim_medida,
+    input wire       fim_transmissao, 
+    input wire       fim_contador,
+    output reg       zera,
+    output reg       medir_distancia,
+    output reg       transmitir,
+    output reg       conta,
+    output reg       pronto,
+    output reg [3:0] db_estado 
 );
 
-    // Sinais internos
-    wire        s_medir  ;
-    wire        s_trigger;
-    wire [11:0] s_medida ;
-    wire [3:0]  s_estado ;
+    // Tipos e sinais
+    reg [3:0] Eatual, Eprox; 
 
-    // Circuito de interface com sensor
-    interface_hcsr04 INT (
-        .clock    (clock    ),
-        .reset    (reset    ),
-        .medir    (s_medir  ),
-        .echo     (echo     ),
-        .trigger  (s_trigger),
-        .medida   (s_medida ),
-        .pronto   (pronto   ),
-        .db_estado(s_estado )
-    );
+    // Parâmetros para os estados
+    parameter inicial            = 4'b0000;
+    parameter preparacao         = 4'b0001;
+    parameter medir              = 4'b0010;
+    parameter espera_medida      = 4'b0011;
+    parameter transmissao        = 4'b0100;
+    parameter espera_transmissao = 4'b0101;
+    parameter contador           = 4'b0110;
+    parameter fim                = 4'b0111;
 
-    // Displays para medida (4 dígitos BCD)
-    hexa7seg H0 (
-        .hexa   (s_medida[3:0]), 
-        .display(hex0         )
-    );
-    hexa7seg H1 (
-        .hexa   (s_medida[7:4]), 
-        .display(hex1         )
-    );
-    hexa7seg H2 (
-        .hexa   (s_medida[11:8]), 
-        .display(hex2          )
-    );
+    // Estado
+    always @(posedge clock, posedge reset) begin
+        if (reset) 
+            Eatual <= inicial;
+        else
+            Eatual <= Eprox; 
+    end
 
-    // Trata entrada medir (considerando borda de subida)
-    edge_detector DB (
-        .clock(clock  ),
-        .reset(reset  ),
-        .sinal(medir  ), 
-        .pulso(s_medir)
-    );
+    // Lógica de próximo estado
+    always @(*) begin
+        case (Eatual)
+            inicial             : Eprox = mensurar ? preparacao : inicial;
+            preparacao          : Eprox = medir;
+            medir               : Eprox = espera_medida;
+            espera_medida       : Eprox = fim_medida ? transmissao : espera_medida;
+            transmissao         : Eprox = espera_transmissao;
+            espera_transmissao  : Eprox = fim_transmissao ? (fim_contador ? fim : contador) : espera_transmissao;
+            contador            : Eprox = transmissao;
+            fim                 : Eprox = mensurar ? preparacao : fim;
+            default             : Eprox = inicial;
+        endcase
+    end
 
-    // Sinais de saída
-    assign trigger = s_trigger;
+    // Saídas de controle
+    always @(*) begin
+        zera            = (Eatual == preparacao || Eatual == inicial ) ? 1'b1 : 1'b0;
+        medir_distancia = (Eatual == medir      ) ? 1'b1 : 1'b0;
+        transmitir      = (Eatual == transmissao) ? 1'b1 : 1'b0;
+        conta           = (Eatual == contador   ) ? 1'b1 : 1'b0;
+        pronto          = (Eatual == fim        ) ? 1'b1 : 1'b0;
 
-    // Sinal de depuração (estado da UC)
-    hexa7seg H5 (
-        .hexa   (s_estado ), 
-        .display(db_estado)
-    );
-    assign db_echo    = echo;
-    assign db_trigger = s_trigger;
-    assign db_medir   = medir;
+        case (Eatual)
+            inicial:            db_estado = 4'b0000;
+            preparacao:         db_estado = 4'b0001;
+            medir:              db_estado = 4'b0010;
+            espera_medida:      db_estado = 4'b0011;
+            transmissao:        db_estado = 4'b0100;
+            espera_transmissao: db_estado = 4'b0101;
+            contador:           db_estado = 4'b0110;
+            fim:                db_estado = 4'b0111;
+           
+            default:            db_estado = 4'b1111;
+        endcase
+    end
+
 
 endmodule

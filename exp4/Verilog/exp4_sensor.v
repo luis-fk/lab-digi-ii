@@ -18,12 +18,13 @@ module exp4_sensor (
     input wire        reset,
     input wire        medir,
     input wire        echo,
-    input wire [11:0] medida
+    output wire [11:0] medida,
     output wire       trigger,
     output wire [6:0] hex0,
     output wire [6:0] hex1,
     output wire [6:0] hex2,
     output wire       pronto,
+    output wire       saida_serial,
     output wire       db_medir,
     output wire       db_echo,
     output wire       db_trigger,
@@ -32,19 +33,48 @@ module exp4_sensor (
 
     // Sinais internos
     wire        s_medir  ;
+    wire        s_transmitir;
+    wire        s_fim_transmissao;
+    wire        s_fim_contador;
+    wire        s_zera;
+    wire        s_conta;
+    wire        s_medir_distancia;
+    wire        fim_medicao ;
     wire        s_trigger;
     wire [11:0] s_medida ;
     wire [3:0]  s_estado ;
 
+    assign medida = s_medida;
+
     exp4_sensor_fd exp4_fd (
-        .clock    (clock    ),
-        .reset    (reset    ),
-        .medir    (s_medir  ),
-        .echo     (echo     ),
-        .trigger  (s_trigger),
-        .medida   (s_medida ),
-        .pronto   (pronto   ),
-        .db_estado(s_estado )
+        .clock          (clock             ),
+        .reset          (s_zera            ),
+        .medir          (s_medir_distancia ),
+        .echo           (echo              ),
+        .transmitir     (s_transmitir      ),
+        .conta          (s_conta           ),
+        .trigger        (s_trigger         ),
+        .fim_contador   (s_fim_contador    ),
+        .fim_medicao    (fim_medicao       ),
+        .fim_transmissao(s_fim_transmissao ),
+        .db_estado      (),
+        .saida_serial   (saida_serial      ),
+        .medida         (s_medida          )
+    );
+
+    exp4_sensor_uc exp4_uc (
+        .clock          (clock            ),
+        .reset          (reset            ),
+        .mensurar       (s_medir          ),
+        .fim_medida     (fim_medicao      ),
+        .fim_transmissao(s_fim_transmissao),
+        .fim_contador   (s_fim_contador   ),
+        .zera           (s_zera           ),
+        .medir_distancia(s_medir_distancia),
+        .transmitir     (s_transmitir     ),
+        .conta          (s_conta          ),
+        .pronto         (pronto           ),
+        .db_estado      (s_estado         )
     );
 
     // Displays para medida (4 dígitos BCD)
@@ -77,6 +107,7 @@ module exp4_sensor (
         .hexa   (s_estado ), 
         .display(db_estado)
     );
+
     assign db_echo    = echo;
     assign db_trigger = s_trigger;
     assign db_medir   = medir;

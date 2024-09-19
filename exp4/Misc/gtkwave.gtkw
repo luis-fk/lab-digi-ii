@@ -1,0 +1,38 @@
+[*]
+[*] GTKWave Analyzer v3.3.100 (w)1999-2019 BSI
+[*] Thu Sep 19 21:50:56 2024
+[*]
+[dumpfile] "D:\Studies\materiais\LabDigi\lab-dig-ii\exp4\Misc\wave.vcd"
+[savefile] "D:\Studies\materiais\LabDigi\lab-dig-ii\exp4\Misc\gtkwave.gtkw"
+[timestart] 17170500
+[size] 1536 801
+[pos] -87 -87
+*-16.000000 17330000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] exp4_sensor_tb.
+[treeopen] exp4_sensor_tb.dut.
+[sst_width] 240
+[signals_width] 182
+[sst_expanded] 1
+[sst_vpaned_height] 224
+@28
+exp4_sensor_tb.dut.clock
+exp4_sensor_tb.dut.reset
+@421
+exp4_sensor_tb.caso
+@22
+exp4_sensor_tb.dut.s_estado[3:0]
+exp4_sensor_tb.medida_out[11:0]
+@28
+exp4_sensor_tb.dut.medir
+exp4_sensor_tb.dut.s_trigger
+exp4_sensor_tb.dut.echo
+exp4_sensor_tb.dut.fim_medicao
+exp4_sensor_tb.dut.s_medida[11:0]
+exp4_sensor_tb.dut.s_fim_transmissao
+exp4_sensor_tb.dut.exp4_fd.s_medida_ascii[6:0]
+exp4_sensor_tb.dut.s_fim_contador
+exp4_sensor_tb.dut.exp4_fd.saida_serial
+exp4_sensor_tb.dut.pronto
+exp4_sensor_tb.dut.exp4_fd.serial.U2_UC.tick
+[pattern_trace] 1
+[pattern_trace] 0
