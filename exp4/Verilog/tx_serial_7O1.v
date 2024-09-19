@@ -2,7 +2,7 @@
  *
  */
  
-module tx_serial_7N2 (
+module tx_serial_7O1 (
     input        clock           ,
     input        reset           ,
     input        partida         , // entradas

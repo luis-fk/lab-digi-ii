@@ -13,12 +13,11 @@
  * --------------------------------------------------------------------------
  */
  
-module exp4_sensor (
+module exp4_sensor_uc (
     input wire        clock,
     input wire        reset,
     input wire        medir,
     input wire        echo,
-    input wire [11:0] medida
     output wire       trigger,
     output wire [6:0] hex0,
     output wire [6:0] hex1,
@@ -36,7 +35,8 @@ module exp4_sensor (
     wire [11:0] s_medida ;
     wire [3:0]  s_estado ;
 
-    exp4_sensor_fd exp4_fd (
+    // Circuito de interface com sensor
+    interface_hcsr04 INT (
         .clock    (clock    ),
         .reset    (reset    ),
         .medir    (s_medir  ),
