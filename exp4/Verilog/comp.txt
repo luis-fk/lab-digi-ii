@@ -1,1 +1,16 @@
 # iverilog -c comp.txt
+
+modulos/contador_bcd_3digitos.v
+modulos/contador_m.v
+modulos/edge_detector.v
+modulos/gerador_pulso.v
+modulos/hexa7seg.v
+modulos/registrador_n.v
+contador_cm_fd.v
+contador_cm_uc.v
+contador_cm.v
+interface_hcsr04_fd.v
+interface_hcsr04_uc.v
+interface_hcsr04.v
+interface_hcsr04_tb.v
+exp4_sensor.v
