@@ -15,10 +15,10 @@ add wave -noupdate -height 20 -expand -group {Sinais de fim} -color white -heigh
 add wave -noupdate -height 20 -expand -group {Sinais de fim} -color white -height 30 -radix binary /exp4_sensor_tb/dut/pronto
 add wave -noupdate -height 20 -expand -group {Sinais de fim} -color white -height 30 -radix binary /exp4_sensor_tb/dut/s_fim_contador
 TreeUpdate [SetDefaultTree]
-WaveRestoreCursors {{Cursor 1} {1330933 ns} 0}
+WaveRestoreCursors {{Cursor 1} {6274370 ns} 0}
 quietly wave cursor active 1
-configure wave -namecolwidth 150
-configure wave -valuecolwidth 100
+configure wave -namecolwidth 156
+configure wave -valuecolwidth 79
 configure wave -justifyvalue left
 configure wave -signalnamewidth 1
 configure wave -snapdistance 10
@@ -31,4 +31,4 @@ configure wave -griddelta 40
 configure wave -timeline 0
 configure wave -timelineunits us
 update
-WaveRestoreZoom {15592672 ns} {21821597 ns}
+WaveRestoreZoom {5758971 ns} {6910121 ns}
