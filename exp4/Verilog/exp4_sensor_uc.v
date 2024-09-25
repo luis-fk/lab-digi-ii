@@ -5,12 +5,19 @@ module exp4_sensor_uc (
     input wire       fim_medida,
     input wire       fim_transmissao, 
     input wire       fim_contador,
+
+    input wire       fim_contador32,
+
     output reg       zera,
     output reg       medir_distancia,
     output reg       transmitir,
     output reg       conta,
+    output reg       conta32,
     output reg       pronto,
-    output reg [3:0] db_estado 
+
+    output reg       reset_contador32,
+
+    output reg [3:0] db_estado
 );
 
     // Tipos e sinais
@@ -24,7 +31,8 @@ module exp4_sensor_uc (
     parameter transmissao        = 4'b0100;
     parameter espera_transmissao = 4'b0101;
     parameter contador           = 4'b0110;
-    parameter fim                = 4'b0111;
+    parameter espera_contador32  = 4'b0111;
+    parameter fim                = 4'b1111;
 
     // Estado
     always @(posedge clock, posedge reset) begin
@@ -42,9 +50,10 @@ module exp4_sensor_uc (
             medir               : Eprox = espera_medida;
             espera_medida       : Eprox = fim_medida ? transmissao : espera_medida;
             transmissao         : Eprox = espera_transmissao;
-            espera_transmissao  : Eprox = fim_transmissao ? (fim_contador ? fim : contador) : espera_transmissao;
+            espera_transmissao  : Eprox = fim_transmissao ? (fim_contador ? (fim_contador32 ? fim : espera_contador32) : contador) : espera_transmissao;
             contador            : Eprox = transmissao;
-            fim                 : Eprox = mensurar ? preparacao : fim;
+            espera_contador32   : Eprox = fim_contador32 ? preparacao : espera_contador32;
+            fim                 : Eprox = mensurar ? medir : fim;
             default             : Eprox = inicial;
         endcase
     end
@@ -56,6 +65,8 @@ module exp4_sensor_uc (
         transmitir      = (Eatual == transmissao) ? 1'b1 : 1'b0;
         conta           = (Eatual == contador   ) ? 1'b1 : 1'b0;
         pronto          = (Eatual == fim        ) ? 1'b1 : 1'b0;
+        conta32         = (Eatual == espera_contador32 ) ? 1'b1 : 1'b0;
+        reset_contador32 = (Eatual == fim ) ? 1'b1 : 1'b0;
 
         case (Eatual)
             inicial:            db_estado = 4'b0000;
@@ -65,7 +76,8 @@ module exp4_sensor_uc (
             transmissao:        db_estado = 4'b0100;
             espera_transmissao: db_estado = 4'b0101;
             contador:           db_estado = 4'b0110;
-            fim:                db_estado = 4'b0111;
+            espera_contador32:  db_estado = 4'b0111;
+            fim:                db_estado = 4'b1111;
            
             default:            db_estado = 4'b1111;
         endcase

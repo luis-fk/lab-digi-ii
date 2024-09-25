@@ -5,13 +5,16 @@
     input wire         echo,
     input wire         transmitir,
     input wire         conta,
+    input wire         conta32,
+    input wire         reset_contador32,
     output wire        trigger,
     output wire        fim_contador,
     output wire        fim_medicao,
     output wire        fim_transmissao,
     output wire [3:0]  db_estado,
     output wire        saida_serial,
-    output wire [11:0] medida
+    output wire [11:0] medida,
+    output wire        fim_contador32
 );
 
 wire        s_fim_transmissao;
@@ -47,6 +50,16 @@ contador_m #( .M(4), .N(2) ) CONT (
     .conta  (conta           ),
     .Q      (s_valor_contador),
     .fim    (s_fim_contador  ),
+    .meio   ()
+);
+
+contador_m #( .M(100_000_000), .N(32) ) CONT32 (
+    .clock  (clock           ),
+    .zera_as(),
+    .zera_s (reset_contador32),
+    .conta  (conta32),
+    .Q      (),
+    .fim    (fim_contador_32),
     .meio   ()
 );
 

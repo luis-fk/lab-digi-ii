@@ -28,7 +28,8 @@ module exp4_sensor (
     output wire       db_medir,
     output wire       db_echo,
     output wire       db_trigger,
-    output wire [6:0] db_estado
+    output wire [6:0] db_estado,
+    output wire       db_saida_serial
 );
 
     // Sinais internos
@@ -43,7 +44,11 @@ module exp4_sensor (
     wire        s_trigger;
     wire [11:0] s_medida ;
     wire [3:0]  s_estado ;
-
+    wire        s_fim_contador32;
+    wire        s_conta32;
+    wire        s_reset_contador32;
+    
+    assign db_saida_serial = saida_serial;
     assign medida = s_medida;
 
     exp4_sensor_fd exp4_fd (
@@ -59,7 +64,13 @@ module exp4_sensor (
         .fim_transmissao(s_fim_transmissao ),
         .db_estado      (),
         .saida_serial   (saida_serial      ),
-        .medida         (s_medida          )
+        .medida         (s_medida          ),
+        
+        .conta32        (s_conta32         ),
+
+        .fim_contador32(s_fim_contador32  ),
+
+        .reset_contador32(s_reset_contador32)
     );
 
     exp4_sensor_uc exp4_uc (
@@ -69,12 +80,20 @@ module exp4_sensor (
         .fim_medida     (fim_medicao      ),
         .fim_transmissao(s_fim_transmissao),
         .fim_contador   (s_fim_contador   ),
+
+        .fim_contador32 (s_fim_contador32),
+
         .zera           (s_zera           ),
         .medir_distancia(s_medir_distancia),
         .transmitir     (s_transmitir     ),
         .conta          (s_conta          ),
+
+        .conta32        (s_conta32        ),
+
         .pronto         (pronto           ),
-        .db_estado      (s_estado         )
+        .db_estado      (s_estado         ),
+
+        .reset_contador32(s_reset_contador32)
     );
 
     // Displays para medida (4 dígitos BCD)
@@ -95,7 +114,7 @@ module exp4_sensor (
     edge_detector DB (
         .clock(clock  ),
         .reset(reset  ),
-        .sinal(medir  ), 
+        .sinal(~medir  ), 
         .pulso(s_medir)
     );
 
@@ -110,6 +129,6 @@ module exp4_sensor (
 
     assign db_echo    = echo;
     assign db_trigger = s_trigger;
-    assign db_medir   = medir;
+    assign db_medir   = ~medir;
 
 endmodule

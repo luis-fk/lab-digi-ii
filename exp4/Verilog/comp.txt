@@ -2,7 +2,6 @@ contador_cm.v
 contador_cm_fd.v
 contador_cm_uc.v
 exp4_sensor.v
-exp4_sensor_tb.v
 exp4_sensor_fd.v
 exp4_sensor_uc.v
 interface_hcsr04.v

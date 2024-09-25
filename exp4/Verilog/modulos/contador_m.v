@@ -43,7 +43,7 @@ module contador_m #(parameter M=100, N=7)
 
   // Saidas
   always @ (Q)
-      if (Q == M-1)   fim = 1;
+      if (Q >= M-1)   fim = 1;
       else            fim = 0;
 
   always @ (Q)
