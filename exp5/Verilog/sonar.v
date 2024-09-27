@@ -52,7 +52,7 @@ module sonar (
         .saida_serial           (saida_serial),
         .medida                 (s_medida)
         );
-
+   
     wire s_fim_distancia;
     wire s_fim_contador_serial;
     wire s_fim_contador_intervalo;
