@@ -1,13 +1,13 @@
 [*]
 [*] GTKWave Analyzer v3.3.100 (w)1999-2019 BSI
-[*] Fri Sep 27 14:42:28 2024
+[*] Fri Sep 27 14:55:21 2024
 [*]
 [dumpfile] "C:\Users\João Felipe\Desktop\lab_digi\lab-digi-ii\exp5\Misc\wave.vcd"
 [savefile] "C:\Users\João Felipe\Desktop\lab_digi\lab-digi-ii\exp5\Misc\sensor_tb.gtkw"
 [timestart] 0
 [size] 1536 801
-[pos] -61 -61
-*-26.000000 6685230 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[pos] -191 -191
+*-26.000000 700310 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] sensor_tb.
 [treeopen] sensor_tb.UUT.
 [treeopen] sensor_tb.UUT.exp5_fd.
@@ -34,7 +34,21 @@ sensor_tb.UUT.exp5_fd.conta_updown
 sensor_tb.UUT.exp5_fd.conta_intervalo
 @22
 sensor_tb.UUT.exp5_fd.CONT_INTERVALO.Q[27:0]
-@29
+@28
 sensor_tb.UUT.exp5_fd.CONT_INTERVALO.conta
+@200
+-contador_updown
+@28
+sensor_tb.UUT.exp5_fd.UPDOWN.Q[2:0]
+@29
+sensor_tb.UUT.exp5_fd.UPDOWN.conta
+@28
+sensor_tb.UUT.exp5_fd.UPDOWN.fim
+@200
+-contador_serial
+@28
+sensor_tb.UUT.exp5_fd.CONTADOR_SERIAL.Q[2:0]
+sensor_tb.UUT.exp5_fd.CONTADOR_SERIAL.conta
+sensor_tb.UUT.exp5_fd.CONTADOR_SERIAL.fim
 [pattern_trace] 1
 [pattern_trace] 0
