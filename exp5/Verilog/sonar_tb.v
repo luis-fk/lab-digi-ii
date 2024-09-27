@@ -1,11 +1,11 @@
 `timescale 1ns/1ns
 
-module exp4_sensor_tb;
+module sensor_tb;
 
     // Declaração de sinais
     reg         clock_in = 0;
     reg         reset_in = 0;
-    reg         medir_in = 0;
+    reg         ligar_in = 0;
     reg         echo_in  = 0;
     wire [11:0] medida_out;  
     wire        trigger_out;
@@ -13,28 +13,30 @@ module exp4_sensor_tb;
     wire [6:0]  hex1_out;
     wire [6:0]  hex2_out;
     wire        pronto_out;
-    wire [6:0]  db_estado_out;
-    wire        db_medir_out;
-    wire        db_echo_out;
+    // wire [6:0]  db_estado_out;
+    // wire        db_medir_out;
+    // wire        db_echo_out;
     wire        db_trigger_out;
 
+    wire s_pmw_out;
+    wire s_saida_serial_out;
+    wire s_fim_posicao_out;
     // Componente a ser testado (Device Under Test -- DUT)
-    exp4_sensor dut (
-        .clock      (clock_in      ),
-        .reset      (reset_in      ),
-        .medir      (medir_in      ),
-        .echo       (echo_in       ),
-        .medida     (medida_out    ), // Conectar o sinal de entrada
-        .trigger    (trigger_out   ),
-        .hex0       (hex0_out      ),
-        .hex1       (hex1_out      ),
-        .hex2       (hex2_out      ),
-        .pronto     (pronto_out    ),
-        .db_medir   (db_medir_out  ),
-        .db_echo    (db_echo_out   ),
-        .db_trigger (db_trigger_out),
-        .db_estado  (db_estado_out )
-    );
+    sonar UUT (
+    .clock(clock_in),
+    .reset(reset_in),
+    .ligar(ligar_in),
+    .echo(echo_in),
+    .display_mode(),
+    //saidas
+    .trigger(trigger_out),
+    .pwm(s_pmw_out),
+    .saida_serial(s_saida_serial_out),
+    .fim_posicao(s_fim_posicao_out),
+    .db_estado(db_estado_out),
+    .db_fim_transmissao(),
+    .db_fim_posicao()
+);
 
     // Configurações do clock
     parameter clockPeriod = 20; // clock de 50MHz
@@ -52,7 +54,7 @@ module exp4_sensor_tb;
     initial begin
         // $display("Inicio das simulacoes");
         $dumpfile("wave.vcd");
-        $dumpvars(5, exp4_sensor_tb);
+        $dumpvars(5, sensor_tb);
         
         // Inicialização do array de casos de teste (mantendo os mesmos valores)
         // Inicialização do array de casos de teste
@@ -61,7 +63,7 @@ module exp4_sensor_tb;
         casos_teste[2] = 10000;   // 10000us (170,01cm) arredondar para 170cm
 
         // Valores iniciais
-        medir_in = 0;
+        ligar_in = 0;
         echo_in  = 0;
 
         // Reset
@@ -83,9 +85,9 @@ module exp4_sensor_tb;
 
             // 2) Envia pulso medir
             @(negedge clock_in);
-            medir_in = 1;
+            ligar_in = 1;
             #(5*clockPeriod);
-            medir_in = 0;
+            ligar_in = 0;
 
             // 3) Espera por 20us (tempo entre trigger e echo)
             #(20_000); // 20 us

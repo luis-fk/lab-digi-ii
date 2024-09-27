@@ -3,12 +3,12 @@
     input wire         reset,
     input wire         medir,
     input wire         echo,
-    input wire         display_mode,
     input wire         transmitir,
     input wire         conta_updown,
     input wire         reset_updown,
     input wire         conta_serial,
     input wire         conta_intervalo,
+    //saidas
     output wire        trigger,
     output wire        pwm,
     output wire        fim_distancia,
@@ -16,7 +16,14 @@
     output wire        fim_contador_serial,
     output wire        fim_contador_intervalo,
     output wire        saida_serial,
-    output wire [11:0] medida
+    output wire [11:0] distancia,
+    output wire [11:0] angulo,
+    // dbs
+    output wire [3:0] db_estado_interface,
+    output wire [3:0] db_estado_serial,
+    output wire       db_saida_serial,
+    output wire       db_controle_servo,
+    output wire [2:0] db_posicao_servo
 );
 
 wire        s_fim_distancia;
@@ -25,7 +32,6 @@ wire        s_fim_contador_intervalo;
 
 wire [2:0]  s_contador_updown;
 wire [11:0] s_distancia;
-wire [11:0] s_medida;
 wire [6:0]  s_medida_ascii;
 wire [6:0]  s_mux_serial_out;
 wire [2:0]  s_mux_posicao_out;
@@ -43,7 +49,6 @@ assign fim_contador_serial = s_fim_contador_serial;
 assign fim_transmissao = s_fim_transmissao;
 assign fim_distancia = s_fim_distancia;
 assign fim_contador_intervalo = s_fim_contador_intervalo;
-assign medida = s_medida;
 
 assign s_angulo_unidade = s_angulo[3:0];
 assign s_angulo_dezena = s_angulo[7:4];
@@ -53,6 +58,8 @@ assign s_distancia_centena = s_distancia[11:8];
 assign s_distancia_dezena = s_distancia[7:4];
 assign s_distancia_unidade = s_distancia[3:0];
 
+assign angulo = s_angulo;
+assign distancia = s_distancia;
 
 interface_hcsr04 INT (
     .clock    (clock          ),
@@ -62,7 +69,7 @@ interface_hcsr04 INT (
     .trigger  (trigger        ),
     .medida   (s_distancia    ),
     .pronto   (s_fim_distancia),
-    .db_estado(               )
+    .db_estado(db_estado_interface)
 );
 
 controle_servo_3 SERVO (
@@ -71,9 +78,16 @@ controle_servo_3 SERVO (
     .posicao    (s_mux_posicao_out),
     .controle   (pwm              ),
     .db_reset   (                 ),
-    .db_controle(                 ),
-    .db_posicao (                 )
+    .db_controle(s_db_controle_servo),
+    .db_posicao (db_posicao_servo)
 );
+
+wire s_db_controle_servo;
+wire [2:0] s_db_posicao_servo;
+
+assign db_controle_servo = s_db_controle_servo;
+assign db_posicao_servo = s_db_posicao_servo;
+
 
 contadorg_updown_m #( .M(8), .N(3) ) UPDOWN (
     .clock  (clock              ),
@@ -138,15 +152,8 @@ mux_8x1_n #( .BITS(7) ) MUX_SERIAL (
     .MUX_OUT(s_mux_serial_out               )
 );
 
-mux_2x1_n #( .BITS(12) ) MUX_DISPLAY (
-    .D1     (s_angulo                 ),
-    .D0     (s_distancia              ),
-    .SEL    (display_mode             ),
-    .MUX_OUT(s_medida                 )
-);
-
 binary_to_ascii BIN2ASC (
-    .binary_in(s_mux_serial_out     ),
+    .binary_in(s_mux_serial_out),
     .ascii_out(s_medida_ascii)
 );
 
@@ -158,8 +165,8 @@ tx_serial_7O1 serial (
     .saida_serial   (saida_serial     ), 
     .pronto         (s_fim_transmissao),
     .db_partida     (                 ),
-    .db_saida_serial(                 ),
-    .db_estado      (                 ) 
+    .db_saida_serial(db_saida_serial  ),
+    .db_estado      (db_estado_serial ) 
 );
 
 endmodule

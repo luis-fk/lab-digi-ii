@@ -10,7 +10,7 @@ module mux_8x1_n #(
     input  [BITS-1:0] D1,
     input  [BITS-1:0] D0,
     input  [2:0]      SEL,
-    output [BITS-1:0] MUX_OUT
+    output wire [BITS-1:0] MUX_OUT
 );
 
     assign MUX_OUT = 

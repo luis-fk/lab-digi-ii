@@ -13,6 +13,7 @@ module sonar_uc (
     output reg       conta_updown,
     output reg       conta_intervalo,
     output reg       reset_updown,
+    output reg       fim_posicao,
     output reg [3:0] db_estado
 );
 
@@ -64,7 +65,8 @@ module sonar_uc (
         conta_serial    = (Eatual == proximo_digito  ) ? 1'b1 : 1'b0;
         conta_updown    = (Eatual == proxima_posicao) ? 1'b1 : 1'b0;
         conta_intervalo = (Eatual == espera_intervalo ) ? 1'b1 : 1'b0;
-        reset_updown    = (Eprox == inicial) ? 1'b1 : 1'b0;
+        reset_updown    = (Eatual == inicial) ? 1'b1 : 1'b0;
+        fim_posicao     = (Eatual == gera_pulso) ? 1'b1 : 1'b0;
 
         case (Eatual)
                 inicial:            db_estado = 4'b0000;
