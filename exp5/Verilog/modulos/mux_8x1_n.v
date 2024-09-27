@@ -25,4 +25,3 @@ module mux_8x1_n #(
                      {BITS{3'b1}}; // default 
 
 endmodule
-

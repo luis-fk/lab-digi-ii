@@ -29,6 +29,7 @@ module sonar_uc (
     parameter espera_transmissao = 4'b0101;
     parameter proximo_digito     = 4'b0110;
     parameter proxima_posicao    = 4'b0111;
+    parameter gera_pulso         = 
     parameter espera_intervalo   = 4'b1000;
 
     // Estado

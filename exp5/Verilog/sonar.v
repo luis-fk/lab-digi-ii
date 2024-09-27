@@ -89,7 +89,7 @@ module sonar_uc (
 .conta_intervalo       (),
 .reset_updown          (),
 .pronto                (),
-.db_estado             ()
+.db_estado             (s_estado)
 );
 
     sonar_uc exp4_uc (
