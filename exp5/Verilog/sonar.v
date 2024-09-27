@@ -51,64 +51,45 @@ module sonar (
 	    .controle   (controle),
         .db_controle()  
     );
-
-    sonar_fd exp4_fd (
-        .clock          (clock             ),
-        .reset          (s_zera            ),
-        .medir          (s_medir_distancia ),
-        .echo           (echo              ),
-        .display_mode   (display_mode      ), 
-        .transmitir     (s_transmitir      ),
-        .conta          (s_conta           ),
-        .trigger        (s_trigger         ),
-        .pwm            (pwm               ),
-        .fim_contador   (s_fim_contador    ),
-        .fim_medicao    (fim_medicao       ),
-        .fim_transmissao(s_fim_transmissao ),
-        .db_estado      (),
-        .saida_serial   (saida_serial      ),
-        .medida         (s_medida          ),
-        .conta32        (s_conta32         ),
-        .fim_contador32(s_fim_contador32  ),
-        .reset_contador32(s_reset_contador32)
-    );
-
-module sonar_uc (
-.clock                 (clock),
-.reset                 (reset),
-.ligar                 (s_ligar),
-.fim_medida            (fim_medicao), 
-.fim_transmissao       (s_fim_transmissao), 
-.fim_contador_serial   (),
-.fim_contador_intervalo(),
-.zera                  (),
-.medir_distancia       (),
-.transmitir            (),
-.conta_serial          (),
-.conta_updown          (),
-.conta_intervalo       (),
-.reset_updown          (),
-.pronto                (),
-.db_estado             (s_estado)
-);
-
-    sonar_uc exp4_uc (
-        .clock          (clock            ),
-        .reset          (reset            ),
-        .ligar          (s_ligar          ),
-        .fim_medida     (fim_medicao      ),
-        .fim_transmissao(s_fim_transmissao),
-        .fim_contador   (s_fim_contador   ),
-        .fim_contador32 (s_fim_contador32),
-        .zera           (s_zera           ),
-        .medir_distancia(s_medir_distancia),
-        .transmitir     (s_transmitir     ),
-        .conta          (s_conta          ),
-        .conta32        (s_conta32        ),
-        .pronto         (pronto           ),
-        .db_estado      (s_estado         ),
-        .reset_contador32(s_reset_contador32)
-    );
+wire s_conta_updown;
+wire s_reset_updown;
+    sonar_fd exp5_fd(
+        .clock                  (clock),
+        .reset                  (s_zera),
+        .medir                  (s_medir_distancia),
+        .echo                   (echo),
+        .display_mode           (display_mode),
+        .transmitir             (s_transmitir),
+        .conta_updown           (s_conta_updown),
+        .reset_updown           (s_reset_updown),
+        .trigger                (s_trigger),
+        .pwm                    (pwm),
+        .fim_distancia          (),
+        .fim_transmissao        (s_fim_transmissao),
+        .fim_contador_serial    (),
+        .fim_contador_intervalo (),
+        .saida_serial           (saida_serial),
+        .medida                 (s_medida)
+        );
+wire s_fim_distancia;
+    sonar_uc exp5 uc(
+        .clock                 (clock),
+        .reset                 (reset),
+        .ligar                 (s_ligar),
+        .fim_medida            (fim_medicao), 
+        .fim_transmissao       (s_fim_transmissao), 
+        .fim_contador_serial   (),
+        .fim_contador_intervalo(),
+        .zera                  (),
+        .medir_distancia       (),
+        .transmitir            (),
+        .conta_serial          (),
+        .conta_updown          (s_conta_updown),
+        .conta_intervalo       (),
+        .reset_updown          (s_reset_updown),
+        .pronto                (),
+        .db_estado             (s_estado)
+        );
 
     // Displays para medida (4 dígitos BCD)
     hexa7seg H0 (
@@ -140,4 +121,5 @@ module sonar_uc (
         .hexa   (s_estado ), 
         .display(db_estado)
     );
+
 endmodule

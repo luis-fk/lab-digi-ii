@@ -29,8 +29,8 @@ module sonar_uc (
     parameter espera_transmissao = 4'b0101;
     parameter proximo_digito     = 4'b0110;
     parameter proxima_posicao    = 4'b0111;
-    parameter gera_pulso         = 
-    parameter espera_intervalo   = 4'b1000;
+    parameter gera_pulso         = 4'b1000;
+    parameter espera_intervalo   = 4'b1001;
 
     // Estado
     always @(posedge clock, posedge reset) begin
@@ -50,7 +50,8 @@ module sonar_uc (
             transmissao         : Eprox = espera_transmissao;
             espera_transmissao  : Eprox = fim_transmissao ? (fim_contador_serial ? proxima_posicao : proximo_digito) : espera_transmissao;
             proximo_digito      : Eprox = transmissao;
-            proxima_posicao     : Eprox = espera_intervalo;
+            proxima_posicao     : Eprox = gera_pulso;
+            gera_pulso          : Eprox = espera_intervalo;
             espera_intervalo    : Eprox = fim_contador_intervalo ? preparacao : espera_intervalo;
             default             : Eprox = inicial;
         endcase
@@ -75,7 +76,8 @@ module sonar_uc (
                 espera_transmissao: db_estado = 4'b0101;
                 proximo_digito:     db_estado = 4'b0110;
                 proxima_posicao:    db_estado = 4'b0111;
-                espera_intervalo:   db_estado = 4'b1000;
+                gera_pulso:          db_estado = 4'b1000;
+                espera_intervalo:   db_estado = 4'b1001;
 
             default:               db_estado = 4'b1111;
         endcase
