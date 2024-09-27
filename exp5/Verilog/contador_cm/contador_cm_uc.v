@@ -1,18 +1,3 @@
-/* --------------------------------------------------------------------------
- *  Arquivo   : contador_cm_uc-PARCIAL.v
- * --------------------------------------------------------------------------
- *  Descricao : unidade de controle do componente contador_cm
- *              
- *              incrementa contagem de cm a cada sinal de tick enquanto
- *              o pulso de entrada permanece ativo
- *              
- * --------------------------------------------------------------------------
- *  Revisoes  :
- *      Data        Versao  Autor             Descricao
- *      07/09/2024  1.0     Edson Midorikawa  versao em Verilog
- * --------------------------------------------------------------------------
- */
-
 module contador_cm_uc (
     input wire clock,
     input wire reset,

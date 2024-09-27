@@ -13,27 +13,20 @@
  * --------------------------------------------------------------------------
  */
  
-module exp4_sensor (
+module sonar (
     input wire        clock,
     input wire        reset,
-    input wire        medir,
+    input wire        ligar,
     input wire        echo,
-    output wire [11:0] medida,
+    input wire        display_mode,
     output wire       trigger,
-    output wire [6:0] hex0,
-    output wire [6:0] hex1,
-    output wire [6:0] hex2,
-    output wire       pronto,
+    output wire       pwm,
     output wire       saida_serial,
-    output wire       db_medir,
-    output wire       db_echo,
-    output wire       db_trigger,
-    output wire [6:0] db_estado,
-    output wire       db_saida_serial
+    output wire       fim_posicao,
 );
 
     // Sinais internos
-    wire        s_medir  ;
+    wire        s_ligar;
     wire        s_transmitir;
     wire        s_fim_transmissao;
     wire        s_fim_contador;
@@ -51,48 +44,69 @@ module exp4_sensor (
     assign db_saida_serial = saida_serial;
     assign medida = s_medida;
 
-    exp4_sensor_fd exp4_fd (
+    modulo_controle INT2 (
+        .clock      (clock  ),
+        .reset      (reset  ),
+        .posicao    (posicao),
+	    .controle   (controle),
+        .db_controle()  
+    );
+
+    sonar_fd exp4_fd (
         .clock          (clock             ),
         .reset          (s_zera            ),
         .medir          (s_medir_distancia ),
         .echo           (echo              ),
+        .display_mode   (display_mode      ), 
         .transmitir     (s_transmitir      ),
         .conta          (s_conta           ),
         .trigger        (s_trigger         ),
+        .pwm            (pwm               ),
         .fim_contador   (s_fim_contador    ),
         .fim_medicao    (fim_medicao       ),
         .fim_transmissao(s_fim_transmissao ),
         .db_estado      (),
         .saida_serial   (saida_serial      ),
         .medida         (s_medida          ),
-        
         .conta32        (s_conta32         ),
-
         .fim_contador32(s_fim_contador32  ),
-
         .reset_contador32(s_reset_contador32)
     );
 
-    exp4_sensor_uc exp4_uc (
+module sonar_uc (
+.clock                 (clock),
+.reset                 (reset),
+.ligar                 (s_ligar),
+.fim_medida            (fim_medicao), 
+.fim_transmissao       (s_fim_transmissao), 
+.fim_contador_serial   (),
+.fim_contador_intervalo(),
+.zera                  (),
+.medir_distancia       (),
+.transmitir            (),
+.conta_serial          (),
+.conta_updown          (),
+.conta_intervalo       (),
+.reset_updown          (),
+.pronto                (),
+.db_estado             ()
+);
+
+    sonar_uc exp4_uc (
         .clock          (clock            ),
         .reset          (reset            ),
-        .mensurar       (s_medir          ),
+        .ligar          (s_ligar          ),
         .fim_medida     (fim_medicao      ),
         .fim_transmissao(s_fim_transmissao),
         .fim_contador   (s_fim_contador   ),
-
         .fim_contador32 (s_fim_contador32),
-
         .zera           (s_zera           ),
         .medir_distancia(s_medir_distancia),
         .transmitir     (s_transmitir     ),
         .conta          (s_conta          ),
-
         .conta32        (s_conta32        ),
-
         .pronto         (pronto           ),
         .db_estado      (s_estado         ),
-
         .reset_contador32(s_reset_contador32)
     );
 
@@ -114,8 +128,8 @@ module exp4_sensor (
     edge_detector DB (
         .clock(clock  ),
         .reset(reset  ),
-        .sinal(~medir  ), 
-        .pulso(s_medir)
+        .sinal(~ligar ), 
+        .pulso(s_ligar)
     );
 
     // Sinais de saída
@@ -126,9 +140,4 @@ module exp4_sensor (
         .hexa   (s_estado ), 
         .display(db_estado)
     );
-
-    assign db_echo    = echo;
-    assign db_trigger = s_trigger;
-    assign db_medir   = ~medir;
-
 endmodule

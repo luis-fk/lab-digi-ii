@@ -9,16 +9,13 @@ module tx_serial_7O1 (
     input [6:0]  dados_ascii     ,
     output       saida_serial    , // saidas
     output       pronto          ,
-    output       db_clock        , // saidas de depuracao
-    output       db_tick         ,
     output       db_partida      ,
     output       db_saida_serial ,
-    output [6:0] db_estado       
+    output [3:0] db_estado
 );
  
     wire       s_reset        ;
     wire       s_partida      ;
-    wire       s_partida_ed   ;
     wire       s_zera         ;
     wire       s_conta        ;
     wire       s_carrega      ;
@@ -31,7 +28,7 @@ module tx_serial_7O1 (
 	// sinais reset e partida (ativos em alto - GPIO)
     assign s_reset  = reset;
     assign s_partida = partida;
-	 
+
     // fluxo de dados
     tx_serial_7N2_fd U1_FD (
         .clock        ( clock          ),
@@ -45,12 +42,11 @@ module tx_serial_7O1 (
         .fim          ( s_fim          )
     );
 
-
     // unidade de controle
     tx_serial_uc U2_UC (
         .clock     ( clock        ),
         .reset     ( s_reset      ),
-        .partida   ( s_partida_ed ),
+        .partida   ( s_partida    ),
         .tick      ( s_tick       ),
         .fim       ( s_fim        ),
         .zera      ( s_zera       ),
@@ -77,29 +73,14 @@ module tx_serial_7O1 (
         .meio    (        )
     );
 
-
-    // detetor de borda para tratar pulsos largos
-    edge_detector U4_ED (
-        .clock ( clock        ),
-        .reset ( reset        ),
-        .sinal ( s_partida    ),
-        .pulso ( s_partida_ed )
-    );
-
-
     // saida serial
     assign saida_serial = s_saida_serial;
 
     // depuracao
-    assign db_clock        = clock;
-    assign db_tick         = s_tick;
     assign db_partida      = s_partida;
     assign db_saida_serial = s_saida_serial;
 
     // hexa0
-    hexa7seg HEX0 ( 
-        .hexa    ( s_estado  ), 
-        .display ( db_estado )
-    );
+    assign db_estado = s_estado;
   
 endmodule
