@@ -1,3 +1,4 @@
+sonar_tb.v
 sonar.v
 sonar_fd.v
 sonar_uc.v

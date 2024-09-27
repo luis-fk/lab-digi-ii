@@ -1,0 +1,40 @@
+[*]
+[*] GTKWave Analyzer v3.3.100 (w)1999-2019 BSI
+[*] Fri Sep 27 14:42:28 2024
+[*]
+[dumpfile] "C:\Users\João Felipe\Desktop\lab_digi\lab-digi-ii\exp5\Misc\wave.vcd"
+[savefile] "C:\Users\João Felipe\Desktop\lab_digi\lab-digi-ii\exp5\Misc\sensor_tb.gtkw"
+[timestart] 0
+[size] 1536 801
+[pos] -61 -61
+*-26.000000 6685230 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] sensor_tb.
+[treeopen] sensor_tb.UUT.
+[treeopen] sensor_tb.UUT.exp5_fd.
+[sst_width] 268
+[signals_width] 216
+[sst_expanded] 1
+[sst_vpaned_height] 224
+@28
+sensor_tb.clock_in
+@420
+sensor_tb.caso
+@28
+sensor_tb.display_mode_in
+sensor_tb.reset_in
+sensor_tb.s_pmw_out
+sensor_tb.s_saida_serial_out
+sensor_tb.s_fim_posicao_out
+sensor_tb.trigger_out
+sensor_tb.UUT.exp5_fd.conta_serial
+sensor_tb.UUT.exp5_fd.conta_updown
+@200
+-contador_intervalo
+@28
+sensor_tb.UUT.exp5_fd.conta_intervalo
+@22
+sensor_tb.UUT.exp5_fd.CONT_INTERVALO.Q[27:0]
+@29
+sensor_tb.UUT.exp5_fd.CONT_INTERVALO.conta
+[pattern_trace] 1
+[pattern_trace] 0

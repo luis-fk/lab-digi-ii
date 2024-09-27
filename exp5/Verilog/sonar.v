@@ -103,7 +103,7 @@ module sonar (
     assign s_distancia_dezena = s_distancia[7:4];
     assign s_distancia_centena = s_distancia[11:8];
 
-    sonar_uc exp5 (
+    sonar_uc exp5_uc (
         .clock                 (clock),
         .reset                 (reset),
         .ligar                 (s_ligar),
@@ -128,7 +128,7 @@ module sonar (
         // -modo 1: a saida será {distancia, angulo} (cada um com 3 displays)
         // -modo 2: a saída será {posicao do servo, 0, 0, estado do sonar, estado da interface, estado da serial}
         
-    // mux para a multiplexação de recursos
+    // mux para a multiplexação de recursos           hex5                       hex4                    hex3              hex2             hex1                  hex0
     assign displays = (display_mode == 1'b1) ? {s_distancia_centena,      s_distancia_dezena, s_distancia_unidade, s_angulo_centena, s_angulo_dezena,       s_angulo_unidade} 
                                             :  {1'b0, s_db_posicao_servo, 4'b0,               4'b0,                db_estado_sonar,  s_db_estado_interface, s_db_estado_serial};
 

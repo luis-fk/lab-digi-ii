@@ -21,16 +21,16 @@ module sonar_uc (
     reg [3:0] Eatual, Eprox; 
 
     // Parâmetros para os estados
-    parameter inicial            = 4'b0000;
-    parameter preparacao         = 4'b0001;
-    parameter medir              = 4'b0010;
-    parameter espera_medida      = 4'b0011;
-    parameter transmissao        = 4'b0100;
-    parameter espera_transmissao = 4'b0101;
-    parameter proximo_digito     = 4'b0110;
-    parameter proxima_posicao    = 4'b0111;
-    parameter gera_pulso         = 4'b1000;
-    parameter espera_intervalo   = 4'b1001;
+    parameter inicial            = 4'b0000; //0
+    parameter preparacao         = 4'b0001; //1
+    parameter medir              = 4'b0010; //2
+    parameter espera_medida      = 4'b0011; //3
+    parameter transmissao        = 4'b0100; //4
+    parameter espera_transmissao = 4'b0101; //5
+    parameter proximo_digito     = 4'b0110; //6
+    parameter proxima_posicao    = 4'b0111; //7
+    parameter gera_pulso         = 4'b1000; //8
+    parameter espera_intervalo   = 4'b1001; //9
 
     // Estado
     always @(posedge clock, posedge reset) begin

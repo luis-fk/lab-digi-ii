@@ -7,36 +7,49 @@ module sensor_tb;
     reg         reset_in = 0;
     reg         ligar_in = 0;
     reg         echo_in  = 0;
+    reg         display_mode_in = 0;
+
     wire [11:0] medida_out;  
     wire        trigger_out;
     wire [6:0]  hex0_out;
     wire [6:0]  hex1_out;
     wire [6:0]  hex2_out;
-    wire        pronto_out;
-    // wire [6:0]  db_estado_out;
-    // wire        db_medir_out;
-    // wire        db_echo_out;
+    wire [6:0]  hex3_out;
+    wire [6:0]  hex4_out;
+    wire [6:0]  hex5_out;
     wire        db_trigger_out;
+    wire        db_fim_transmissao_out;
+    wire        db_fim_posicao_out;
 
     wire s_pmw_out;
     wire s_saida_serial_out;
     wire s_fim_posicao_out;
+
     // Componente a ser testado (Device Under Test -- DUT)
     sonar UUT (
-    .clock(clock_in),
-    .reset(reset_in),
-    .ligar(ligar_in),
-    .echo(echo_in),
-    .display_mode(),
-    //saidas
-    .trigger(trigger_out),
-    .pwm(s_pmw_out),
-    .saida_serial(s_saida_serial_out),
-    .fim_posicao(s_fim_posicao_out),
-    .db_estado(db_estado_out),
-    .db_fim_transmissao(),
-    .db_fim_posicao()
-);
+        .clock       (clock_in),
+        .reset       (reset_in),
+        .ligar       (ligar_in),
+        .echo        (echo_in ),
+        .display_mode(display_mode_in),
+        //saidas
+        .trigger     (trigger_out),
+        .pwm         (s_pmw_out),
+        .saida_serial(s_saida_serial_out),
+        .fim_posicao (s_fim_posicao_out),
+        .medida      (medida_out),
+        //hex
+        .hex0        (hex0_out),
+        .hex1        (hex1_out),
+        .hex2        (hex2_out),
+        .hex3        (hex3_out),
+        .hex4        (hex4_out),
+        .hex5        (hex5_out),
+        //dbs
+        .db_fim_transmissao(db_fim_transmissao_out),
+        .db_fim_posicao    (db_fim_posicao_out),
+        .db_saida_serial   (db_saida_serial_out)
+    );
 
     // Configurações do clock
     parameter clockPeriod = 20; // clock de 50MHz
@@ -78,7 +91,7 @@ module sensor_tb;
         #(1000); // 1 us
 
         // Loop pelos casos de teste
-        for (caso = 0; caso < 2; caso = caso + 1) begin
+        for (caso = 0; caso < 1; caso = caso + 1) begin
             // 1) Determina a largura do pulso echo e o valor da medida
             $display("Caso de teste %0d: %0dus", caso, casos_teste[caso]);
             larguraPulso = casos_teste[caso]*1000; // 1us=1000
@@ -98,7 +111,7 @@ module sensor_tb;
             echo_in = 0;
 
             // 5) Espera final da medida
-            wait (pronto_out == 1'b1);
+            #(100_000_000*clockPeriod)
             $display("Fim do caso %0d", caso);
 
             // 6) Espera entre casos de teste
