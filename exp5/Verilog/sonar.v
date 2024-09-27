@@ -1,18 +1,3 @@
-/* --------------------------------------------------------------------------
- *  Arquivo   : exp3_sensor.v
- * --------------------------------------------------------------------------
- *  Descricao : circuito de teste do componente interface_hcsr04.v
- *              inclui componentes para dispositivos externos
- *              detector de borda e codificadores de displays de 7 segmentos
- *
- *              usar para sintetizar projeto no Intel Quartus Prime
- * --------------------------------------------------------------------------
- *  Revisoes  :
- *      Data        Versao  Autor             Descricao
- *      07/09/2024  1.0     Edson Midorikawa  versao em Verilog
- * --------------------------------------------------------------------------
- */
- 
 module sonar (
     input wire        clock,
     input wire        reset,
@@ -23,6 +8,7 @@ module sonar (
     output wire       pwm,
     output wire       saida_serial,
     output wire       fim_posicao,
+    output wire [6:0] db_estado
 );
 
     // Sinais internos
@@ -40,19 +26,12 @@ module sonar (
     wire        s_fim_contador32;
     wire        s_conta32;
     wire        s_reset_contador32;
+    wire s_conta_updown;
+    wire s_reset_updown;
     
     assign db_saida_serial = saida_serial;
     assign medida = s_medida;
 
-    modulo_controle INT2 (
-        .clock      (clock  ),
-        .reset      (reset  ),
-        .posicao    (posicao),
-	    .controle   (controle),
-        .db_controle()  
-    );
-wire s_conta_updown;
-wire s_reset_updown;
     sonar_fd exp5_fd(
         .clock                  (clock),
         .reset                  (s_zera),
@@ -62,32 +41,39 @@ wire s_reset_updown;
         .transmitir             (s_transmitir),
         .conta_updown           (s_conta_updown),
         .reset_updown           (s_reset_updown),
+        .conta_serial           (s_conta_serial),
+        .conta_intervalo        (s_conta_intervalo),
         .trigger                (s_trigger),
         .pwm                    (pwm),
-        .fim_distancia          (),
+        .fim_distancia          (s_fim_distancia),
         .fim_transmissao        (s_fim_transmissao),
-        .fim_contador_serial    (),
-        .fim_contador_intervalo (),
+        .fim_contador_serial    (s_fim_contador_serial),
+        .fim_contador_intervalo (s_fim_contador_intervalo),
         .saida_serial           (saida_serial),
         .medida                 (s_medida)
         );
-wire s_fim_distancia;
-    sonar_uc exp5 uc(
+
+    wire s_fim_distancia;
+    wire s_fim_contador_serial;
+    wire s_fim_contador_intervalo;
+    wire s_conta_serial;
+    wire s_conta_intervalo;
+
+    sonar_uc exp5 (
         .clock                 (clock),
         .reset                 (reset),
         .ligar                 (s_ligar),
-        .fim_medida            (fim_medicao), 
+        .fim_medida            (s_fim_distancia), 
         .fim_transmissao       (s_fim_transmissao), 
-        .fim_contador_serial   (),
-        .fim_contador_intervalo(),
-        .zera                  (),
-        .medir_distancia       (),
-        .transmitir            (),
-        .conta_serial          (),
+        .fim_contador_serial   (s_fim_contador_serial),
+        .fim_contador_intervalo(s_fim_contador_intervalo),
+        .zera                  (s_zera),
+        .medir_distancia       (s_medir_distancia),
+        .transmitir            (s_transmitir),
+        .conta_serial          (s_conta_serial),
         .conta_updown          (s_conta_updown),
-        .conta_intervalo       (),
+        .conta_intervalo       (s_conta_intervalo),
         .reset_updown          (s_reset_updown),
-        .pronto                (),
         .db_estado             (s_estado)
         );
 
@@ -104,6 +90,9 @@ wire s_fim_distancia;
         .hexa   (s_medida[11:8]), 
         .display(hex2          )
     );
+wire [6:0] hex0;
+wire [6:0] hex1;
+wire [6:0] hex2;
 
     // Trata entrada medir (considerando borda de subida)
     edge_detector DB (

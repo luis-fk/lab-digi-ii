@@ -8,7 +8,6 @@ contador_cm\contador_cm_uc.v
 modulos\binary_to_ascii.v
 modulos\contador_m.v
 modulos\decoder.v
-modulos\demux_1x8_n.v
 modulos\deslocador_n.v
 modulos\edge_detector.v
 modulos\gerador_pulso.v
@@ -26,4 +25,3 @@ serial\tx_serial_uc.v
 servo\circuito_pwm.v
 servo\contadorg_updown_m.v
 servo\controle_servo_3.v
-tbs\tx_serial_7N2_tb copy.v

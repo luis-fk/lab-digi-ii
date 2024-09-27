@@ -7,6 +7,8 @@
     input wire         transmitir,
     input wire         conta_updown,
     input wire         reset_updown,
+    input wire         conta_serial,
+    input wire         conta_intervalo,
     output wire        trigger,
     output wire        pwm,
     output wire        fim_distancia,
@@ -107,7 +109,7 @@ contador_m #( .M(200_000_000), .N(28) ) CONT_INTERVALO (
     .clock  (clock              ),
     .zera_as(                   ),
     .zera_s (reset              ),
-    .conta  (1'b1               ),
+    .conta  (s_conta_contador_intervalo),
     .Q      (                   ),
     .fim    (s_fim_contador_intervalo),
     .meio   (                   )
@@ -155,8 +157,6 @@ tx_serial_7O1 serial (
     .dados_ascii    (s_medida_ascii   ),
     .saida_serial   (saida_serial     ), 
     .pronto         (s_fim_transmissao),
-    .db_clock       (                 ), 
-    .db_tick        (                 ),
     .db_partida     (                 ),
     .db_saida_serial(                 ),
     .db_estado      (                 ) 

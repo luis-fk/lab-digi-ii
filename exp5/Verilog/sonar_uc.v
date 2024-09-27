@@ -13,7 +13,6 @@ module sonar_uc (
     output reg       conta_updown,
     output reg       conta_intervalo,
     output reg       reset_updown,
-    output reg       pronto,
     output reg [3:0] db_estado
 );
 
