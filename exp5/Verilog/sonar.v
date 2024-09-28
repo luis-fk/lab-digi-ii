@@ -17,9 +17,12 @@ module sonar (
     output wire [6:0]  hex4,
     output wire [6:0]  hex5,
     //dbs
-    output wire       db_fim_transmissao,
+    output wire       db_ligar,
     output wire       db_fim_posicao,
-    output wire       db_saida_serial
+    output wire       db_fim_transmissao,
+    output wire       db_saida_serial,
+    output wire       db_trigger,
+    output wire       db_echo
 );
 
     // Sinais internos
@@ -39,6 +42,10 @@ module sonar (
     assign db_fim_posicao = s_fim_posicao;
     assign db_saida_serial = saida_serial;
     assign db_fim_transmissao = s_fim_transmissao;
+
+    assign db_echo = echo;
+    assign db_trigger = s_trigger;
+    assign db_ligar = ligar;
 
 
     wire [3:0] s_db_estado_interface;
@@ -128,7 +135,7 @@ module sonar (
         // -modo 2: a saída será {posicao do servo, 0, 0, estado do sonar, estado da interface, estado da serial}
         
     // mux para a multiplexação de recursos           hex5                       hex4                    hex3              hex2             hex1                  hex0
-    assign displays = (display_mode == 1'b1) ? {s_distancia_centena,      s_distancia_dezena, s_distancia_unidade, s_angulo_centena, s_angulo_dezena,       s_angulo_unidade} 
+    assign displays = (display_mode == 1'b0) ? {s_distancia_centena,      s_distancia_dezena, s_distancia_unidade, s_angulo_centena, s_angulo_dezena,       s_angulo_unidade} 
                                             :  {1'b0, s_db_posicao_servo, 4'b0,               4'b0,                db_estado_sonar,  s_db_estado_interface, s_db_estado_serial};
 
     // Displays para medida (4 dígitos BCD)
