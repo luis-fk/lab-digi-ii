@@ -9,7 +9,6 @@ module sonar (
     output wire       pwm,
     output wire       saida_serial,
     output wire       fim_posicao,
-    output wire [11:0] medida,
     //hexas
     output wire [6:0]  hex0,
     output wire [6:0]  hex1,
@@ -38,7 +37,6 @@ module sonar (
     
     assign fim_posicao = s_fim_posicao;
     assign db_fim_posicao = s_fim_posicao;
-    assign medida = s_distancia;
     assign db_saida_serial = saida_serial;
     assign db_fim_transmissao = s_fim_transmissao;
 

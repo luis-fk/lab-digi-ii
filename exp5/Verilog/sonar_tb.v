@@ -8,8 +8,7 @@ module sensor_tb;
     reg         ligar_in = 0;
     reg         echo_in  = 0;
     reg         display_mode_in = 0;
-
-    wire [11:0] medida_out;  
+ 
     wire        trigger_out;
     wire [6:0]  hex0_out;
     wire [6:0]  hex1_out;
@@ -37,7 +36,6 @@ module sensor_tb;
         .pwm         (s_pmw_out),
         .saida_serial(s_saida_serial_out),
         .fim_posicao (s_fim_posicao_out),
-        .medida      (medida_out),
         //hex
         .hex0        (hex0_out),
         .hex1        (hex1_out),
