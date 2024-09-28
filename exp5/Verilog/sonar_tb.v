@@ -91,7 +91,7 @@ module sensor_tb;
         #(1000); // 1 us
 
         // Loop pelos casos de teste
-        for (caso = 0; caso < 1; caso = caso + 1) begin
+        for (caso = 0; caso < 2; caso = caso + 1) begin
             // 1) Determina a largura do pulso echo e o valor da medida
             $display("Caso de teste %0d: %0dus", caso, casos_teste[caso]);
             larguraPulso = casos_teste[caso]*1000; // 1us=1000
@@ -111,7 +111,7 @@ module sensor_tb;
             echo_in = 0;
 
             // 5) Espera final da medida
-            #(100_000_000*clockPeriod)
+            #(200_000_000)
             $display("Fim do caso %0d", caso);
 
             // 6) Espera entre casos de teste

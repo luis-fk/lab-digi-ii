@@ -30,7 +30,7 @@
     wire        s_fim_transmissao;
     wire        s_fim_contador_intervalo;
 
-    wire [2:0]  s_contador_updown;
+    wire [2:0]  s_valor_contador_updown;
     wire [11:0] s_distancia;
     wire [6:0]  s_medida_ascii;
     wire [6:0]  s_mux_serial_out;
@@ -94,7 +94,7 @@
         .zera_as(                   ),
         .zera_s (reset_updown       ),
         .conta  (conta_updown       ),
-        .Q      (s_contador_updown  ),
+        .Q      (s_valor_contador_updown  ),
         .inicio (                   ),
         .fim    (                   ),
         .meio   (                   ),
@@ -110,7 +110,7 @@
         .D2     (3'b010),
         .D1     (3'b001),
         .D0     (3'b000),
-        .SEL    (s_contador_updown),
+        .SEL    (s_valor_contador_updown),
         .MUX_OUT(s_mux_posicao_out)
     );
 
@@ -118,8 +118,8 @@
         .posicao(s_mux_posicao_out),
         .angulo(s_angulo)
     );
-
-    contador_m #( .M(200_000_000), .N(28) ) CONT_INTERVALO (
+// trocar para 200_000_000 dps
+    contador_m #( .M(6_000_000), .N(28) ) CONT_INTERVALO (
         .clock  (clock              ),
         .zera_as(                   ),
         .zera_s (reset              ),
