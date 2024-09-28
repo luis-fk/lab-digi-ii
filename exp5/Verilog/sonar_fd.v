@@ -8,6 +8,7 @@
     input wire         reset_updown,
     input wire         conta_serial,
     input wire         conta_intervalo,
+    input wire         zera_pwm,
     //saidas
     output wire        trigger,
     output wire        pwm,
@@ -74,7 +75,7 @@
 
     controle_servo_3 SERVO (
         .clock      (clock            ),
-        .reset      (reset            ),
+        .reset      (zera_pwm         ),
         .posicao    (s_mux_posicao_out),
         .controle   (pwm              ),
         .db_reset   (                 ),

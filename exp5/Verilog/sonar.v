@@ -55,6 +55,7 @@ module sonar (
         .reset_updown           (s_reset_updown),
         .conta_serial           (s_conta_serial),
         .conta_intervalo        (s_conta_intervalo),
+        .zera_pwm               (s_zera_pwm),
         //saidas
         .trigger                (s_trigger),
         .pwm                    (pwm),
@@ -119,9 +120,11 @@ module sonar (
         .conta_intervalo       (s_conta_intervalo),
         .reset_updown          (s_reset_updown),
         .fim_posicao           (s_fim_posicao),
+        .zera_pwm              (s_zera_pwm),
         .db_estado             (db_estado_sonar)
         );
 
+    wire s_zera_pwm;
    wire [23:0] displays;
 
     // há dois modos de operação:

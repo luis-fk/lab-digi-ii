@@ -14,6 +14,7 @@ module sonar_uc (
     output reg       conta_intervalo,
     output reg       reset_updown,
     output reg       fim_posicao,
+    output reg       zera_pwm,
     output reg [3:0] db_estado
 );
 
@@ -60,6 +61,7 @@ module sonar_uc (
     // Saídas de controle
     always @(*) begin
         zera            = (Eatual == preparacao || Eatual == inicial ) ? 1'b1 : 1'b0;
+        zera_pwm        = (Eatual == inicial ) ? 1'b1 : 1'b0;
         medir_distancia = (Eatual == medir      ) ? 1'b1 : 1'b0;
         transmitir      = (Eatual == transmissao) ? 1'b1 : 1'b0;
         conta_serial    = (Eatual == proximo_digito  ) ? 1'b1 : 1'b0;
