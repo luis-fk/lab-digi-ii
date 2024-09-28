@@ -46,6 +46,9 @@
     wire [2:0] s_valor_contador_serial;
     wire s_fim_contador_serial;
 
+    wire s_db_controle_servo;
+    wire [2:0] s_db_posicao_servo;
+
     assign fim_contador_serial = s_fim_contador_serial;
     assign fim_transmissao = s_fim_transmissao;
     assign fim_distancia = s_fim_distancia;
@@ -82,9 +85,6 @@
         .db_controle(s_db_controle_servo),
         .db_posicao (s_db_posicao_servo)
     );
-
-    wire s_db_controle_servo;
-    wire [2:0] s_db_posicao_servo;
 
     assign db_controle_servo = s_db_controle_servo;
     assign db_posicao_servo = s_db_posicao_servo;

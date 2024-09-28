@@ -42,6 +42,33 @@ module sonar (
     assign db_saida_serial = saida_serial;
     assign db_fim_transmissao = s_fim_transmissao;
 
+
+    wire [3:0] s_db_estado_interface;
+    wire [3:0] s_db_estado_serial;
+    wire s_db_saida_serial;
+    wire s_db_controle_servo;
+    wire [2:0] s_db_posicao_servo;
+
+    wire [11:0] s_angulo; 
+    wire [3:0] db_estado_sonar;
+
+    wire [3:0] s_angulo_unidade;
+    wire [3:0] s_angulo_dezena;
+    wire [3:0] s_angulo_centena;
+
+    wire [3:0] s_distancia_unidade;
+    wire [3:0] s_distancia_dezena;
+    wire [3:0] s_distancia_centena;
+
+    wire s_fim_distancia;
+    wire s_fim_contador_serial;
+    wire s_fim_contador_intervalo;
+    wire s_conta_serial;
+    wire s_conta_intervalo; 
+
+    wire s_zera_pwm;
+    wire [23:0] displays;
+
     sonar_fd exp5_fd(
         .clock                  (clock),
         .reset                  (s_zera),
@@ -69,29 +96,6 @@ module sonar (
         .db_controle_servo      (s_db_controle_servo),
         .db_posicao_servo       (s_db_posicao_servo)
     );
-
-    wire [3:0] s_db_estado_interface;
-    wire [3:0] s_db_estado_serial;
-    wire s_db_saida_serial;
-    wire s_db_controle_servo;
-    wire [2:0] s_db_posicao_servo;
-
-    wire [11:0] s_angulo; 
-    wire [3:0] db_estado_sonar;
-
-    wire [3:0] s_angulo_unidade;
-    wire [3:0] s_angulo_dezena;
-    wire [3:0] s_angulo_centena;
-
-    wire [3:0] s_distancia_unidade;
-    wire [3:0] s_distancia_dezena;
-    wire [3:0] s_distancia_centena;
-
-    wire s_fim_distancia;
-    wire s_fim_contador_serial;
-    wire s_fim_contador_intervalo;
-    wire s_conta_serial;
-    wire s_conta_intervalo; 
     
     assign s_angulo_unidade = s_angulo[3:0];
     assign s_angulo_dezena = s_angulo[7:4];
@@ -120,9 +124,6 @@ module sonar (
         .zera_pwm              (s_zera_pwm),
         .db_estado             (db_estado_sonar)
         );
-
-    wire s_zera_pwm;
-    wire [23:0] displays;
 
     // há dois modos de operação:
         // -modo 1: a saida será {distancia, angulo} (cada um com 3 displays)
