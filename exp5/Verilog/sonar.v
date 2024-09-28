@@ -27,14 +27,11 @@ module sonar (
     wire        s_ligar;
     wire        s_transmitir;
     wire        s_fim_transmissao;
-    wire        s_fim_contador;
     wire        s_zera;
-    wire        s_conta;
     wire        s_medir_distancia;
     wire        fim_medicao ;
     wire        s_trigger;
     wire [11:0] s_distancia;
-    wire [3:0]  s_estado ;
     wire s_conta_updown;
     wire s_reset_updown;
     wire s_fim_posicao;
@@ -125,7 +122,7 @@ module sonar (
         );
 
     wire s_zera_pwm;
-   wire [23:0] displays;
+    wire [23:0] displays;
 
     // há dois modos de operação:
         // -modo 1: a saida será {distancia, angulo} (cada um com 3 displays)
