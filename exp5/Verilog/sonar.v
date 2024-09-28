@@ -168,7 +168,7 @@ module sonar (
     edge_detector DB (
         .clock(clock  ),
         .reset(reset  ),
-        .sinal(~ligar ), 
+        .sinal(ligar ), 
         .pulso(s_ligar)
     );
 
