@@ -1,4 +1,4 @@
-`timescale 1ns/1ns
+`timescale 1ns/100ps
 
 module sensor_tb;
 
@@ -55,7 +55,7 @@ module sensor_tb;
     always #(clockPeriod/2) clock_in = ~clock_in;
 
     // Array de casos de teste (estrutura equivalente em Verilog)
-    reg [31:0] casos_teste [0:7]; // Usando 32 bits para acomodar o tempo
+    reg [31:0] casos_teste [0:10]; // Usando 32 bits para acomodar o tempo
     integer caso;
 
     // Largura do pulso
@@ -71,7 +71,16 @@ module sensor_tb;
         // Inicialização do array de casos de teste
         casos_teste[0] = 5899;    // 5899us (100,29cm) truncar para 100cm
         casos_teste[1] = 4399;    // 4399us (74,79cm) arredondar para 75cm
-        casos_teste[2] = 10000;   // 10000us (170,01cm) arredondar para 170cm
+        casos_teste[2] = 1200;   // 10000us (170,01cm) arredondar para 170cm
+        casos_teste[3] = 2000;   // 10000us (170,01cm) arredondar para 170cm
+        casos_teste[4] = 1000;   // 10000us (170,01cm) arredondar para 170cm
+        casos_teste[5] = 500;   // 10000us (170,01cm) arredondar para 170cm
+        casos_teste[6] = 1500;   // 10000us (170,01cm) arredondar para 170cm
+        casos_teste[7] = 700;   // 10000us (170,01cm) arredondar para 170cm
+        casos_teste[8] = 800;   // 10000us (170,01cm) arredondar para 170cm
+        casos_teste[9] = 900;   // 10000us (170,01cm) arredondar para 170cm
+        casos_teste[10] = 1100;   // 10000us (170,01cm) arredondar para 170cm
+
 
         // Valores iniciais
         ligar_in = 0;
@@ -89,7 +98,7 @@ module sensor_tb;
         #(1000); // 1 us
 
         // Loop pelos casos de teste
-        for (caso = 0; caso < 3; caso = caso + 1) begin
+        for (caso = 0; caso < 11; caso = caso + 1) begin
             // 1) Determina a largura do pulso echo e o valor da medida
             $display("Caso de teste %0d: %0dus", caso, casos_teste[caso]);
             larguraPulso = casos_teste[caso]*1000; // 1us=1000

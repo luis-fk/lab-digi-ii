@@ -24,7 +24,10 @@
     output wire [3:0] db_estado_serial,
     output wire       db_saida_serial,
     output wire       db_controle_servo,
-    output wire [2:0] db_posicao_servo
+    output wire [2:0] db_posicao_servo,
+	 
+	 output wire       db_fim_updown,
+	 output wire [2:0] db_mux_posicao_out
 );
 
     wire        s_fim_distancia;
@@ -64,6 +67,8 @@
 
     assign angulo = s_angulo;
     assign distancia = s_distancia;
+	 
+	 assign db_mux_posicao_out = s_mux_posicao_out;
 
     interface_hcsr04 INT (
         .clock    (clock          ),
@@ -90,14 +95,16 @@
     assign db_posicao_servo = s_db_posicao_servo;
 
 
-    seletor_pos #( .M(14), .N(3) ) UPDOWN (
+    contadorg_updown_m #( .M(8), .N(3) ) UPDOWN (
         .clock  (clock              ),
         .zera_as(1'b0               ),
         .zera_s (reset_updown       ),
         .conta  (conta_updown       ),
-        .posicao_sel(s_valor_contador_updown),
-        .fim    (                   ),
-        .meio   (                   )
+        .Q      (s_valor_contador_updown),
+        .inicio (                   ),
+        .fim    (db_fim_updown      ),
+        .meio   (                   ),
+        .direcao(                   )
     );
 
     mux_8x1_n #( .BITS(3) ) MUX_POSICAO (
@@ -117,10 +124,10 @@
         .posicao(s_mux_posicao_out),
         .angulo(s_angulo)
     );
-// trocar para 200_000_000 dps
-    contador_m #( .M(6_000_000), .N(28) ) CONT_INTERVALO (
+// trocar para 100_000_000 dps
+    contador_m #( .M(100_000_000), .N(28) ) CONT_INTERVALO (
         .clock  (clock              ),
-        .zera_as(                   ),
+        .zera_as(1'b0               ),
         .zera_s (reset              ),
         .conta  (conta_intervalo),
         .Q      (                   ),
@@ -130,7 +137,7 @@
 
     contador_m #( .M(8), .N(3) ) CONTADOR_SERIAL (
         .clock  (clock                ),
-        .zera_as(                     ),
+        .zera_as(1'b0                 ),
         .zera_s (reset                ),
         .conta  (conta_serial         ),
         .Q      (s_valor_contador_serial),

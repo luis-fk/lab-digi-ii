@@ -24,5 +24,6 @@ serial\tx_serial_7O1.v
 serial\tx_serial_7O1_fd.v
 serial\tx_serial_uc.v
 servo\circuito_pwm.v
-servo\contadorg_updown_m.v
+servo\seletor_pos.v
 servo\controle_servo_3.v
+
