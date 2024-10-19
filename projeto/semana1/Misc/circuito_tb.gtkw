@@ -1,0 +1,46 @@
+[*]
+[*] GTKWave Analyzer v3.3.100 (w)1999-2019 BSI
+[*] Sat Oct 19 19:16:29 2024
+[*]
+[dumpfile] "C:\Users\João Felipe\Desktop\Poli\lab_digi\lab-digi-ii\projeto\semana1\Misc\wave.vcd"
+[savefile] "C:\Users\João Felipe\Desktop\Poli\lab_digi\lab-digi-ii\projeto\semana1\Misc\circuito_tb.gtkw"
+[timestart] 0
+[size] 1536 801
+[pos] -113 -113
+*-10.000000 1030 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] circuito_tb.
+[treeopen] circuito_tb.dut.
+[sst_width] 197
+[signals_width] 234
+[sst_expanded] 1
+[sst_vpaned_height] 224
+@201
+-tb
+@420
+circuito_tb.caso
+@28
+circuito_tb.clock_in
+circuito_tb.comecar_transmissao
+@22
+circuito_tb.dado_serial[7:0]
+@28
+circuito_tb.entrada_serial_in
+circuito_tb.reset_in
+circuito_tb.transmissao_feita_out
+@200
+-rx_serial
+@28
+circuito_tb.dut.rx_serial_8N1_nandland.i_Rx_Serial
+@22
+circuito_tb.dut.rx_serial_8N1_nandland.o_Rx_Byte[7:0]
+@28
+circuito_tb.dut.rx_serial_8N1_nandland.o_Rx_DV
+@200
+-tx_serial
+@22
+circuito_tb.tx_serial_8N1_nandland.i_Tx_Byte[7:0]
+@28
+circuito_tb.tx_serial_8N1_nandland.o_Tx_Serial
+circuito_tb.tx_serial_8N1_nandland.o_Tx_Active
+[pattern_trace] 1
+[pattern_trace] 0

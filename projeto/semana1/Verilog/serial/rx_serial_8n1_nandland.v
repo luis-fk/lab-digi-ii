@@ -11,7 +11,7 @@
 // Example: 10 MHz Clock, 115200 baud UART
 // (50000000)/(115200) = 434
   
-module uart_rx 
+module rx_serial_8N1_nandland 
   #(parameter CLKS_PER_BIT = 434)
   (
    input        i_Clock,
@@ -29,7 +29,7 @@ module uart_rx
   reg           r_Rx_Data_R = 1'b1;
   reg           r_Rx_Data   = 1'b1;
    
-  reg [7:0]     r_Clock_Count = 0;
+  reg [8:0]     r_Clock_Count = 0;
   reg [2:0]     r_Bit_Index   = 0; //8 bits total
   reg [7:0]     r_Rx_Byte     = 0;
   reg           r_Rx_DV       = 0;
