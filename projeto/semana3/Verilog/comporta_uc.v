@@ -4,8 +4,7 @@ module circuito_uc (
     input wire       abrirComporta,
     input wire       inicioPosicao,
     input wire       fimPosicao,
-    input wire       fimIntervalo,
-    input wire       abrirComporta,
+    input wire       fimContadorIntervalo,
     output reg       contaIntervalo,
     output reg       contaUpdown,
     output reg       zeraIntervalo,
@@ -37,7 +36,7 @@ module circuito_uc (
             inicial         : Eprox = abrirComporta ? prepara : inicial;
             prepara         : Eprox = mudaPosicao;
             mudaPosicao     : Eprox = esperaIntervalo;
-            esperaIntervalo : Eprox = fimPosicao ? esperaFechar : (fimIntervalo ? (inicioPosicao ? inicial : mudaPosicao) : esperaIntervalo);
+            esperaIntervalo : Eprox = fimPosicao ? esperaFechar : (fimContadorIntervalo ? (inicioPosicao ? inicial : mudaPosicao) : esperaIntervalo);
             esperaFechar    : Eprox = abrirComporta ? esperaFechar : mudaPosicao;
             default         : Eprox = inicial;
         endcase

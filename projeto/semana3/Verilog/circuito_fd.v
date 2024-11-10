@@ -2,15 +2,20 @@ module circuito_fd (
     input wire        clock,
     input wire        reset,
     input wire        entrada_serial,
-
-    input wire        reset_updown,
-    input wire        conta_updown,
+    
+    input wire        zeraUpdown,
+    input wire        contaUpdown,
+    input wire        contaIntervalo,
+    input wire        zeraIntervalo,
 
     //saidas
     output wire       perteceAoIntervalo,
     output wire       pesoMaxIgualZero,
     output wire       comando,
-    output wire       pwm
+    output wire       pwm,
+    output wire       fimContadorIntervalo,
+    output wire       inicioPosicao,
+    output wire       fimPosicao
 );
     
     wire [7:0] dado;
@@ -86,24 +91,17 @@ module circuito_fd (
         .amaiorB()
     );
 
-
-
-
-
-
-
-
-
-
     wire [2:0] valorContadorUpdown;
     wire [2:0] muxPosicaoOut;
-    
+
+    assign inicioPosicao = (muxPosicaoOut == 3'b000) ? 1'b1 : 1'b0;
+    assign fimPosicao    = (muxPosicaoOut == 3'b111 || muxPosicaoOut == 3'b000) ? 1'b1 : 1'b0;    
 
     contador_updown #( .M(14), .N(3) ) UPDOWN (
         .clock      (clock              ),
         .zera_as    (1'b0               ),
-        .zera_s     (reset_updown       ), // ajustar
-        .conta      (conta_updown       ), // ajustar
+        .zera_s     (zeraUpdown         ),
+        .conta      (contaUpdown        ),
         //out
         .value      (valorContadorUpdown),
         .fim        (                   ),
@@ -126,16 +124,16 @@ module circuito_fd (
     contador_m #( .M(5_000_000), .N(28) ) CONT_INTERVALO (
         .clock  (clock              ),
         .zera_as(                   ),
-        .zera_s (reset              ),
-        .conta  (contaIntervalo     ), // ajustar
+        .zera_s (zeraIntervalo      ),
+        .conta  (contaIntervalo     ), 
         .Q      (                   ),
-        .fim    (fimContadorIntervalo), // ajustar
+        .fim    (fimContadorIntervalo),
         .meio   (                   )
     );
 
     controle_servo_3 SERVO (
         .clock      (clock            ),
-        .reset      (zera_pwm         ), // ajustar
+        .reset      (reset            ),
         .posicao    (muxPosicaoOut    ),
         .controle   (pwm              ),
         .db_reset   (                 ),
