@@ -16,8 +16,8 @@ export default function TabTwoScreen() {
       <ThemedText>Aqui você encontra todas as informações de uso do aplicativo Feed Cat.</ThemedText>
       <Collapsible title="Configuração da Wifi">
         <ThemedText>
-          Ao conectar o dispositivo na tomada, uma rede wifi chamada FeedCat aparecera na lista de Wi-Fis do 
-          seu dispositivo.{"\n\n"}
+          Ao conectar o dispositivo na tomada, uma rede wifi chamada Feed Cat aparecera na lista de Wi-Fis do 
+          seu dispositivo, cuja senha é 12345678.{"\n\n"}
           
           Basta conectar a essa rede e usar os campos de envio de nome da Wi-Fi e a sua senha e
           clicar no botão de enviar dados do Wi-Fi. Isso deverá ser feito toda vez que você desconectar
@@ -27,7 +27,8 @@ export default function TabTwoScreen() {
       <Collapsible title="Configurando a balança">
         <ThemedText>
           Para configurar a balança, basta usar os campos de envio de peso minimo e peso maximo e
-          clicar no botão de enviar dados do peso. {"\n\n"}
+          clicar no botão de enviar dados do peso. Os pesos mínimos e máximos padrão são 1 Kg para o peso
+          mínimo e 2 Kg para o peso máximo. {"\n\n"}
           
           A balança aceita valores entre 0,5 Kg e 9,9 Kg. A precisão é de 0,1 Kg, ou seja para um valor de 4,47 Kg,
           o que será enviado a balança será o valor 4,4 Kg.
