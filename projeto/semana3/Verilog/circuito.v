@@ -2,8 +2,6 @@ module circuito (
     input wire        clock,
     input wire        reset,
     input wire        entrada_serial,
-
-    output wire       pesoMaxIgualZero,
     output wire       pwm
 );
 
