@@ -1,15 +1,15 @@
 [*]
 [*] GTKWave Analyzer v3.3.100 (w)1999-2019 BSI
-[*] Mon Nov 11 14:37:10 2024
+[*] Mon Nov 11 15:14:50 2024
 [*]
 [dumpfile] "C:\Users\Jo„o Felipe\Desktop\Poli\lab_digi\lab-digi-ii\projeto\semana3\Verilog\wave.vcd"
-[dumpfile_mtime] "Mon Nov 11 14:34:48 2024"
-[dumpfile_size] 449109769
+[dumpfile_mtime] "Mon Nov 11 15:04:13 2024"
+[dumpfile_size] 550772821
 [savefile] "C:\Users\Jo„o Felipe\Desktop\Poli\lab_digi\lab-digi-ii\projeto\semana3\Verilog\a.gtkw"
-[timestart] 0
+[timestart] 357300
 [size] 1536 801
-[pos] -61 -61
-*-28.000000 618000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[pos] -113 -113
+*-17.000000 610650 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] circuito_tb.
 [treeopen] circuito_tb.uut.
 [treeopen] circuito_tb.uut.FD.
@@ -61,9 +61,7 @@ circuito_tb.uut.UC.Eatual[3:0]
 circuito_tb.uut.UC_comporta.Eatual[3:0]
 @28
 circuito_tb.uut.UC_comporta.abrirComporta
-@29
 circuito_tb.uut.UC_comporta.comando
-@28
 circuito_tb.uut.UC_comporta.pesoMaxIgualZero
 @200
 -uart_recep√ß√£o
@@ -75,5 +73,19 @@ circuito_tb.uut.FD.rx_serial_8N1_nandland.o_Rx_Byte[7:0]
 circuito_tb.uut.FD.rx_serial_8N1_nandland.o_Rx_DV
 @22
 circuito_tb.uut.FD.valor[7:0]
+@200
+-contador_updown
+@28
+circuito_tb.uut.FD.UPDOWN.conta
+circuito_tb.uut.FD.UPDOWN.meio
+circuito_tb.uut.FD.UPDOWN.value[2:0]
+@200
+-contador_intervalo
+@28
+circuito_tb.uut.FD.CONT_INTERVALO.conta
+@22
+circuito_tb.uut.FD.CONT_INTERVALO.Q[27:0]
+@29
+circuito_tb.uut.FD.CONT_INTERVALO.zera_s
 [pattern_trace] 1
 [pattern_trace] 0

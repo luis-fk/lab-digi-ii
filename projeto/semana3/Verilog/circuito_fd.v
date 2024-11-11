@@ -96,7 +96,7 @@ module circuito_fd (
     wire [2:0] muxPosicaoOut;
 
     assign inicioPosicao = (muxPosicaoOut == 3'b000) ? 1'b1 : 1'b0;
-    assign fimPosicao    = (muxPosicaoOut == 3'b111 || muxPosicaoOut == 3'b000) ? 1'b1 : 1'b0;    
+    assign fimPosicao    = (muxPosicaoOut == 3'b111) ? 1'b1 : 1'b0;    
 
     contador_updown #( .M(14), .N(3) ) UPDOWN (
         .clock      (clock              ),
