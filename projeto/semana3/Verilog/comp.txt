@@ -26,3 +26,6 @@ serial\tx_serial_uc.v
 servo\circuito_pwm.v
 servo\contador_updown.v
 servo\controle_servo_3.v
+
+
+circuito_tb.v

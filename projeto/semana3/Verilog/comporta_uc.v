@@ -5,6 +5,8 @@ module comporta_uc (
     input wire       inicioPosicao,
     input wire       fimPosicao,
     input wire       fimContadorIntervalo,
+    input wire       pesoMaxIgualZero,
+    input wire       comando,
     output reg       contaIntervalo,
     output reg       contaUpdown,
     output reg       zeraIntervalo,
@@ -33,7 +35,7 @@ module comporta_uc (
     // Lógica de próximo estado
     always @(*) begin
         case (Eatual)
-            inicial         : Eprox = abrirComporta ? prepara : inicial;
+            inicial         : Eprox = abrirComporta ? (comando ? prepara : (pesoMaxIgualZero ? inicial : prepara)) : inicial;
             prepara         : Eprox = mudaPosicao;
             mudaPosicao     : Eprox = esperaIntervalo;
             esperaIntervalo : Eprox = fimPosicao ? esperaFechar : (fimContadorIntervalo ? (inicioPosicao ? inicial : mudaPosicao) : esperaIntervalo);

@@ -3,7 +3,6 @@ module circuito_uc (
     input wire       reset,
     input wire       fimRecepcao,
     input wire       comando,
-    input wire       pesoMaxIgualZero,
     output reg       abrir,
     output reg       enableReg,
     output reg [3:0] dbEstado
@@ -30,7 +29,7 @@ module circuito_uc (
     always @(*) begin
         case (Eatual)
             inicial      : Eprox = esperaDado;
-            esperaDado   : Eprox = fimRecepcao ? (comando ? (~pesoMaxIgualZero ? mudarPosicao : esperaDado): armazenaDado) : esperaDado;
+            esperaDado   : Eprox = fimRecepcao ? (comando ? mudarPosicao : armazenaDado) : esperaDado;
             armazenaDado : Eprox = esperaDado;
             mudarPosicao : Eprox = esperaDado;
             default      : Eprox = inicial;

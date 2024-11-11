@@ -46,7 +46,6 @@ module circuito (
         .reset              (reset              ),
         .fimRecepcao        (fimRecepcao        ),
         .comando            (comando            ),
-        .pesoMaxIgualZero   (pesoMaxIgualZero   ),
         .abrir              (abrirComportaUc    ),
         .enableReg          (enableReg          ),
         .dbEstado           (                   )
@@ -59,12 +58,14 @@ module circuito (
         .inicioPosicao          (inicioPosicao          ),
         .fimPosicao             (fimPosicao             ),
         .fimContadorIntervalo   (fimContadorIntervalo   ),
+        .pesoMaxIgualZero       (pesoMaxIgualZero       ),
+        .comando                (comando                ),
         .contaIntervalo         (contaIntervalo         ),
         .contaUpdown            (contaUpdown            ),
         .zeraIntervalo          (zeraIntervalo          ),
         .zeraUpdown             (zeraUpdown             ),
         .dbEstado               (                       )
     );
-    
+
 
 endmodule

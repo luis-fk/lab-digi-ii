@@ -55,13 +55,13 @@ module circuito_fd (
         .clock(clock),
         .clear(reset),
         .enable(enableReg),
-        .D({reg_out[55:8], valor}),
+        .D({reg_out[47:0], valor}), // data
         .Q(reg_out)
     );
 
-    assign pesoMin = reg_out[23:8];
-    assign pesoMax = reg_out[39:24];
-    assign pesoAtual = reg_out[55:40];
+    assign pesoMax = reg_out[55:40];
+    assign pesoMin = reg_out[39:24];
+    assign pesoAtual = reg_out[23:8];
 
     comparador_n #( .N(16) ) comparador_n1 
     (

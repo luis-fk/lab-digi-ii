@@ -9,17 +9,18 @@ module circuito_tb;
     reg comecar_transmissao = 0;
 
     wire        entrada_serial_in;
-    wire [6:0]  hex0_out;
+    wire pwm_out;
 
     wire transmissao_feita_out;
 
     // Componente a ser testado (Device Under Test -- DUT)
-    circuito dut (
-        .clock          (clock_in),
-        .reset          (reset_in),
-        .entrada_serial (entrada_serial_in),
-        .hexa           (hex0_out)
-    );
+
+    circuito uut (
+    .clock(clock_in),
+    .reset(reset_in),
+    .entrada_serial(entrada_serial_in),
+    .pwm(pwm_out)
+);
 
     tx_serial_8N1_nandland #(.CLKS_PER_BIT(434)) tx_serial_8N1_nandland 
     (
@@ -48,13 +49,18 @@ module circuito_tb;
         
         // Inicialização do array de casos de teste (mantendo os mesmos valores)
         // Inicialização do array de casos de teste
-        casos_teste[0] = 1;
-        casos_teste[1] = 2;
-        casos_teste[2] = 3;
-        casos_teste[3] = 4;
-        casos_teste[4] = 5;
-        casos_teste[5] = 6;
-        casos_teste[6] = 7;
+        // peso min = 10
+        //peso max = 20
+
+        // peso atual = 15
+
+        casos_teste[0] = 8'h30; // comando
+        casos_teste[1] = 8'h31; // 1
+        casos_teste[2] = 8'h30; // 0
+        casos_teste[3] = 8'h32; // 2
+        casos_teste[4] = 8'h30; // 0
+        casos_teste[5] = 8'h31; // 1
+        casos_teste[6] = 8'h35; // 5
         casos_teste[7] = 8;
         casos_teste[8] = 9;
 
@@ -72,7 +78,7 @@ module circuito_tb;
         #(1000); // 1 us
 
         // Loop pelos casos de teste
-        for (caso = 0; caso < 9; caso = caso + 1) begin
+        for (caso = 0; caso < 7; caso = caso + 1) begin
             // 1) Determina a largura do pulso echo e o valor da medida
             $display("Caso de teste %0d: %0dus", caso, casos_teste[caso]);
 
@@ -91,6 +97,8 @@ module circuito_tb;
             // 6) Espera entre casos de teste
             #(1000); // 1 us
         end
+
+        #(10000000*clockPeriod); // 1 us
 
         // Fim da simulação
         $display("Fim das simulacoes");

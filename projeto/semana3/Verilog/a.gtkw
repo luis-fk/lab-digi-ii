@@ -1,0 +1,79 @@
+[*]
+[*] GTKWave Analyzer v3.3.100 (w)1999-2019 BSI
+[*] Mon Nov 11 14:37:10 2024
+[*]
+[dumpfile] "C:\Users\Jo„o Felipe\Desktop\Poli\lab_digi\lab-digi-ii\projeto\semana3\Verilog\wave.vcd"
+[dumpfile_mtime] "Mon Nov 11 14:34:48 2024"
+[dumpfile_size] 449109769
+[savefile] "C:\Users\Jo„o Felipe\Desktop\Poli\lab_digi\lab-digi-ii\projeto\semana3\Verilog\a.gtkw"
+[timestart] 0
+[size] 1536 801
+[pos] -61 -61
+*-28.000000 618000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] circuito_tb.
+[treeopen] circuito_tb.uut.
+[treeopen] circuito_tb.uut.FD.
+[treeopen] circuito_tb.uut.FD.SERVO.
+[sst_width] 325
+[signals_width] 390
+[sst_expanded] 1
+[sst_vpaned_height] 477
+@420
+circuito_tb.caso
+@28
+circuito_tb.clock_in
+circuito_tb.transmissao_feita_out
+@22
+circuito_tb.dado_serial[7:0]
+@200
+-reg_dados
+@28
+circuito_tb.uut.FD.registrador_n.clear
+@22
+circuito_tb.uut.FD.registrador_n.D[55:0]
+circuito_tb.uut.FD.registrador_n.Q[55:0]
+@28
+circuito_tb.uut.FD.registrador_n.enable
+@200
+-parametros
+@24
+circuito_tb.uut.FD.pesoMax[15:0]
+circuito_tb.uut.FD.pesoMin[15:0]
+circuito_tb.uut.FD.pesoAtual[15:0]
+@28
+circuito_tb.uut.FD.pesoAtualMenorPesoMax
+circuito_tb.uut.FD.pesoAtualIgualPesoMaxComparador1
+circuito_tb.uut.FD.pesoAtualMmaiorPesoMin
+circuito_tb.uut.FD.pesoAtualIgualPesoMaxComparador2
+circuito_tb.uut.FD.perteceAoIntervalo
+@200
+-motor
+@28
+circuito_tb.uut.FD.SERVO.posicao[2:0]
+circuito_tb.uut.FD.pwm
+@200
+-uc_controle
+@22
+circuito_tb.uut.UC.Eatual[3:0]
+@200
+-uc_comporta
+@22
+circuito_tb.uut.UC_comporta.Eatual[3:0]
+@28
+circuito_tb.uut.UC_comporta.abrirComporta
+@29
+circuito_tb.uut.UC_comporta.comando
+@28
+circuito_tb.uut.UC_comporta.pesoMaxIgualZero
+@200
+-uart_recep√ß√£o
+@28
+circuito_tb.uut.FD.rx_serial_8N1_nandland.i_Rx_Serial
+@22
+circuito_tb.uut.FD.rx_serial_8N1_nandland.o_Rx_Byte[7:0]
+@28
+circuito_tb.uut.FD.rx_serial_8N1_nandland.o_Rx_DV
+@22
+circuito_tb.uut.FD.valor[7:0]
+[pattern_trace] 1
+[pattern_trace] 0
