@@ -1,4 +1,4 @@
-module circuito_uc (
+module comporta_uc (
     input wire       clock,
     input wire       reset,
     input wire       abrirComporta,
@@ -9,7 +9,7 @@ module circuito_uc (
     output reg       contaUpdown,
     output reg       zeraIntervalo,
     output reg       zeraUpdown,
-    output reg [3:0] dbEstado,
+    output reg [3:0] dbEstado
 
 );
     // Estados
@@ -50,10 +50,11 @@ module circuito_uc (
         contaIntervalo = (Eatual == esperaIntervalo) ? 1'b1 : 1'b0;
 
         case (Eatual)
-            inicial:      dbEstado = 4'b0000;
-            esperaDado:   dbEstado = 4'b0001;
-            armazenaDado: dbEstado = 4'b0010;
-            mudarPosicao: dbEstado = 4'b0011;
+            inicial:         dbEstado = 4'b0000;
+            prepara:         dbEstado = 4'b0001;
+            mudaPosicao:     dbEstado = 4'b0010;
+            esperaIntervalo: dbEstado = 4'b0011;
+            esperaFechar:    dbEstado = 4'b0100;
             default:      dbEstado = 4'b1111;
         endcase
     end

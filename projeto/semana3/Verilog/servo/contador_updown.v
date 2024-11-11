@@ -19,7 +19,7 @@ module contador_updown #(parameter M = 14, N = 4)
 	
 	contador_m #(
 		.M(14),
-		.N(4)
+		.N(3)
 	) contador_maneiro (
     .clock(clock),
     .zera_as(),

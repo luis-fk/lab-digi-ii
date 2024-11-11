@@ -7,6 +7,7 @@ module circuito_fd (
     input wire        contaUpdown,
     input wire        contaIntervalo,
     input wire        zeraIntervalo,
+    input wire        enableReg,
 
     //saidas
     output wire       perteceAoIntervalo,
@@ -15,13 +16,13 @@ module circuito_fd (
     output wire       pwm,
     output wire       fimContadorIntervalo,
     output wire       inicioPosicao,
-    output wire       fimPosicao
+    output wire       fimPosicao,
+    output wire       fimRecepcao
 );
     
     wire [7:0] dado;
     wire [55:0] reg_out;
     wire [7:0] valor;
-    wire enable_reg;
 
     wire [15:0] pesoMin;
     wire [15:0] pesoMax;
@@ -37,15 +38,15 @@ module circuito_fd (
     (
         .i_Clock(clock),
         .i_Rx_Serial(entrada_serial),
-        .o_Rx_DV(enable_reg),
+        .o_Rx_DV(fimRecepcao),
         .o_Rx_Byte(dado)
     );
 
     // Modulo ASCII2BinarioComando
-    assign valor = dado - 7'h30;
+    assign valor = dado - 8'h30;
 
     // Se der errado colocar um edge detector aqui na saida comando
-    assign comando = (dado == 7'h23) ? 1'b1 : 1'b0; 
+    assign comando = (dado == 8'h23) ? 1'b1 : 1'b0; 
 
 
     //reg_out = {comando (8 bits), peso_min (16 bits), peso_max (16 bits), peso_atual (16 bits)}
@@ -53,14 +54,14 @@ module circuito_fd (
     (
         .clock(clock),
         .clear(reset),
-        .enable(enable_reg),
-        .D({reg_out[8:55], valor}),
+        .enable(enableReg),
+        .D({reg_out[55:8], valor}),
         .Q(reg_out)
     );
 
-    assign pesoMin = reg_out[8:23];
-    assign pesoMax = reg_out[24:39];
-    assign pesoAtual = reg_out[40:55];
+    assign pesoMin = reg_out[23:8];
+    assign pesoMax = reg_out[39:24];
+    assign pesoAtual = reg_out[55:40];
 
     comparador_n #( .N(16) ) comparador_n1 
     (

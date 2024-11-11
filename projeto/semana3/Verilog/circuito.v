@@ -16,7 +16,11 @@ module circuito (
     wire zeraUpdown;
     wire zeraIntervalo;
     wire comando;
-
+    wire fimRecepcao;
+    wire enableReg;
+    wire perteceAoIntervalo;
+    wire abrirComportaUc;
+    
     circuito_fd FD (
         .clock                  (clock                  ),
         .reset                  (reset                  ),
@@ -24,28 +28,33 @@ module circuito (
         .zeraUpdown             (zeraUpdown             ),
         .contaUpdown            (contaUpdown            ),
         .contaIntervalo         (contaIntervalo         ),
+        .enableReg              (enableReg              ),
         .zeraIntervalo          (zeraIntervalo          ),
-        .perteceAoIntervalo     (abrirComporta          ),
+        .perteceAoIntervalo     (perteceAoIntervalo     ),
         .pesoMaxIgualZero       (pesoMaxIgualZero       ),
         .comando                (comando                ),
         .pwm                    (pwm                    ),
         .fimContadorIntervalo   (fimContadorIntervalo   ),
         .inicioPosicao          (inicioPosicao          ),
-        .fimPosicao             (fimPosicao             )
+        .fimPosicao             (fimPosicao             ),
+        .fimRecepcao            (fimRecepcao            )
     );
+
+    assign abrirComporta = perteceAoIntervalo | abrirComportaUc;
+
 
     circuito_uc UC (
         .clock              (clock              ),
         .reset              (reset              ),
-        .fimRecepcao        (                   ),
+        .fimRecepcao        (fimRecepcao        ),
         .comando            (comando            ),
         .pesoMaxIgualZero   (pesoMaxIgualZero   ),
-        .abrir              (                   ),
-        .enableReg          (                   ),
+        .abrir              (abrirComportaUc    ),
+        .enableReg          (enableReg          ),
         .dbEstado           (                   )
     );
 
-    comporta_uc UC_2 (
+    comporta_uc UC_comporta (
         .clock                  (clock                  ),
         .reset                  (reset                  ),
         .abrirComporta          (abrirComporta          ),
@@ -56,7 +65,7 @@ module circuito (
         .contaUpdown            (contaUpdown            ),
         .zeraIntervalo          (zeraIntervalo          ),
         .zeraUpdown             (zeraUpdown             ),
-        .dbEstado               (                       ),
+        .dbEstado               (                       )
     );
     
 

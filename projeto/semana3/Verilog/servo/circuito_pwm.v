@@ -21,7 +21,7 @@ module circuito_pwm #(    // valores default
     parameter largura_100   = 56450,
     parameter largura_101   = 61800, 
     parameter largura_110   = 67150,
-    parameter largura_111   = 73500, 
+    parameter largura_111   = 73500
 ) (
     input        clock,
     input        reset  ,
