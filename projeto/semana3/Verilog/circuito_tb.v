@@ -98,7 +98,7 @@ module circuito_tb;
             #(1000); // 1 us
         end
 
-        #(1000000000000*clockPeriod); // 1 us
+        #(100000000000000*clockPeriod); // 1 us
 
         // Fim da simulação
         $display("Fim das simulacoes");

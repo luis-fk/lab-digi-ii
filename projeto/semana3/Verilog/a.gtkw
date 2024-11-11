@@ -1,15 +1,15 @@
 [*]
 [*] GTKWave Analyzer v3.3.100 (w)1999-2019 BSI
-[*] Mon Nov 11 15:14:50 2024
+[*] Mon Nov 11 16:36:23 2024
 [*]
 [dumpfile] "C:\Users\João Felipe\Desktop\Poli\lab_digi\lab-digi-ii\projeto\semana3\Verilog\wave.vcd"
-[dumpfile_mtime] "Mon Nov 11 15:04:13 2024"
-[dumpfile_size] 550772821
+[dumpfile_mtime] "Mon Nov 11 16:30:24 2024"
+[dumpfile_size] 862824706
 [savefile] "C:\Users\João Felipe\Desktop\Poli\lab_digi\lab-digi-ii\projeto\semana3\Verilog\a.gtkw"
-[timestart] 357300
+[timestart] 0
 [size] 1536 801
 [pos] -113 -113
-*-17.000000 610650 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-27.000000 200914250 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] circuito_tb.
 [treeopen] circuito_tb.uut.
 [treeopen] circuito_tb.uut.FD.
@@ -17,7 +17,7 @@
 [sst_width] 325
 [signals_width] 390
 [sst_expanded] 1
-[sst_vpaned_height] 477
+[sst_vpaned_height] 528
 @420
 circuito_tb.caso
 @28
@@ -50,6 +50,7 @@ circuito_tb.uut.FD.perteceAoIntervalo
 -motor
 @28
 circuito_tb.uut.FD.SERVO.posicao[2:0]
+@29
 circuito_tb.uut.FD.pwm
 @200
 -uc_controle
@@ -85,7 +86,7 @@ circuito_tb.uut.FD.UPDOWN.value[2:0]
 circuito_tb.uut.FD.CONT_INTERVALO.conta
 @22
 circuito_tb.uut.FD.CONT_INTERVALO.Q[27:0]
-@29
+@28
 circuito_tb.uut.FD.CONT_INTERVALO.zera_s
 [pattern_trace] 1
 [pattern_trace] 0
