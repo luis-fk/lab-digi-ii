@@ -17,7 +17,10 @@ module circuito_fd (
     output wire       fimContadorIntervalo,
     output wire       inicioPosicao,
     output wire       fimPosicao,
-    output wire       fimRecepcao
+    output wire       fimRecepcao,
+
+
+    output wire [47:0] valor_reg
 );
     
     wire [7:0] dado;
@@ -33,6 +36,8 @@ module circuito_fd (
 
     wire pesoAtualMmaiorPesoMin;
     wire pesoAtualIgualPesoMaxComparador2;
+
+    assign valor_reg = reg_out[47:0] ;
 
     rx_serial_8N1_nandland #(.CLKS_PER_BIT(434)) rx_serial_8N1_nandland 
     (
