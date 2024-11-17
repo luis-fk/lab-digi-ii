@@ -3,22 +3,18 @@ module circuito (
     input wire        reset,
     input wire        abrir,
     input wire        entrada_serial,
-
     input wire        select_ucs,
-
+    //saidas
     output wire       pwm,
-
     output wire       abrir_db,
-
-
-    
+    output wire       db_pertence_ao_intervalo,
+    // displays
     output wire [6:0] hex0_out,
     output wire [6:0] hex1_out,
     output wire [6:0] hex2_out,
     output wire [6:0] hex3_out,
     output wire [6:0] hex4_out,
     output wire [6:0] hex5_out
-
 );
 
     wire abrirComporta;
@@ -34,6 +30,8 @@ module circuito (
     wire enableReg;
     wire perteceAoIntervalo;
     wire abrirComportaUc;
+
+    wire [2:0] muxPosicaoOut;
 
     wire [3:0] uc_comporta;
     wire [3:0] uc_controle;
@@ -61,12 +59,14 @@ module circuito (
     assign pesoAtual1 = valor_reg[11:8];
     assign pesoAtual0 = valor_reg[3:0];
 
-    assign hex0_in = select_ucs ? uc_comporta : pesoMin0;
-    assign hex1_in = select_ucs ? uc_controle : pesoMin1;
-    assign hex2_in = select_ucs ? 4'b0 : pesoMax0;
-    assign hex3_in = select_ucs ? 4'b0 : pesoMax1;
-    assign hex4_in = select_ucs ? 4'b0 : pesoAtual0;
-    assign hex5_in = select_ucs ? 4'b0 : pesoAtual0;
+    assign hex5_in = select_ucs ? 4'b0 : pesoMax1;
+    assign hex4_in = select_ucs ? 4'b0 : pesoMax0;
+
+    assign hex3_in = select_ucs ? 4'b0 : pesoMin1;
+    assign hex2_in = select_ucs ? {1'b0, muxPosicaoOut} : pesoMin0;
+
+    assign hex1_in = select_ucs ? uc_controle : pesoAtual1;
+    assign hex0_in = select_ucs ? uc_comporta  : pesoAtual0;
 
     circuito_fd FD (
         .clock                  (clock                  ),
@@ -85,13 +85,15 @@ module circuito (
         .inicioPosicao          (inicioPosicao          ),
         .fimPosicao             (fimPosicao             ),
         .fimRecepcao            (fimRecepcao            ),
+        .muxPosicaoOut          (muxPosicaoOut          ),
         .valor_reg              (valor_reg              )
     );
 
     assign abrir_db = abrir;
 
     assign abrirComporta = perteceAoIntervalo | abrirComportaUc;
-
+    
+    assign db_pertence_ao_intervalo = perteceAoIntervalo | abrirComportaUc;
 
     circuito_uc UC (
         .clock              (clock              ),
@@ -106,7 +108,7 @@ module circuito (
     comporta_uc UC_comporta (
         .clock                  (clock                  ),
         .reset                  (reset                  ),
-        .abrirComporta          (abrir                  ),
+        .abrirComporta          (abrir | abrirComporta  ),
         .inicioPosicao          (inicioPosicao          ),
         .fimPosicao             (fimPosicao             ),
         .fimContadorIntervalo   (fimContadorIntervalo   ),
@@ -118,8 +120,6 @@ module circuito (
         .zeraUpdown             (zeraUpdown             ),
         .dbEstado               (uc_comporta            )
     );
-
-
 
     hexa7seg hex0 (
         .hexa(hex0_in),

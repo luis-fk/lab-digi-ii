@@ -38,7 +38,7 @@ module circuito_uc (
 
     // Saídas de controle
     always @(*) begin
-        abrir     = (Eatual == mudarPosicao) ? 1'b1 : 1'b0;
+        abrir     = (Eatual == mudarPosicao) ? ~abrir : abrir;
         enableReg = (Eatual == armazenaDado) ? 1'b1 : 1'b0;
 
         case (Eatual)

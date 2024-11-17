@@ -18,6 +18,7 @@ module circuito_fd (
     output wire       inicioPosicao,
     output wire       fimPosicao,
     output wire       fimRecepcao,
+    output wire [2:0] muxPosicaoOut,
 
 
     output wire [47:0] valor_reg
@@ -34,8 +35,8 @@ module circuito_fd (
     wire pesoAtualMenorPesoMax;
     wire pesoAtualIgualPesoMaxComparador1;
 
-    wire pesoAtualMmaiorPesoMin;
-    wire pesoAtualIgualPesoMaxComparador2;
+    wire pesoAtualMaiorPesoMin;
+    wire pesoAtualIgualPesoMinComparador2;
 
     assign valor_reg = reg_out[47:0] ;
 
@@ -59,14 +60,15 @@ module circuito_fd (
     (
         .clock(clock),
         .clear(reset),
-        .enable(enableReg),
+        .enable(enableReg), // fimRecepcao
         .D({reg_out[47:0], valor}), // data
         .Q(reg_out)
     );
 
-    assign pesoMax = reg_out[55:40];
-    assign pesoMin = reg_out[39:24];
-    assign pesoAtual = reg_out[23:8];
+
+    assign pesoMax = reg_out[47:32];
+    assign pesoMin = reg_out[31:16];
+    assign pesoAtual = reg_out[15:0];
 
     comparador_n #( .N(16) ) comparador_n1 
     (
@@ -74,19 +76,18 @@ module circuito_fd (
         .B             (pesoAtual),
         .aMenorB       (),
         .aIgualB       (pesoAtualIgualPesoMaxComparador1),
-        .amaiorB       (pesoAtualMenorPesoMax)
+        .aMaiorB       (pesoAtualMenorPesoMax)
     );
 
     comparador_n #( .N(16) ) comparador_n2
     (
         .A(pesoMin), 
         .B(pesoAtual),
-        .aMenorB(pesoAtualMmaiorPesoMin),
-        .aIgualB(pesoAtualIgualPesoMaxComparador2),
-        .amaiorB()
+        .aMenorB(pesoAtualMaiorPesoMin),
+        .aIgualB(pesoAtualIgualPesoMinComparador2),
+        .aMaiorB()
     );
-
-    assign perteceAoIntervalo = (pesoAtualMenorPesoMax | pesoAtualIgualPesoMaxComparador1) & (pesoAtualMmaiorPesoMin | pesoAtualIgualPesoMaxComparador2);
+    assign perteceAoIntervalo = (pesoAtualMenorPesoMax | pesoAtualIgualPesoMaxComparador1) & (pesoAtualMaiorPesoMin | pesoAtualIgualPesoMinComparador2);
 
     comparador_n #( .N(16) ) comparador_n3
     (
@@ -94,11 +95,11 @@ module circuito_fd (
         .B(16'b0),
         .aMenorB(),
         .aIgualB(pesoMaxIgualZero),
-        .amaiorB()
+        .aMaiorB()
     );
 
     wire [2:0] valorContadorUpdown;
-    wire [2:0] muxPosicaoOut;
+    //wire [2:0] muxPosicaoOut;
 
     assign inicioPosicao = (muxPosicaoOut == 3'b000) ? 1'b1 : 1'b0;
     assign fimPosicao    = (muxPosicaoOut == 3'b111) ? 1'b1 : 1'b0;    
