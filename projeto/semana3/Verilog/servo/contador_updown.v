@@ -14,12 +14,12 @@ module contador_updown #(parameter M = 14, N = 4)
     output reg           meio
 );
 
-	wire [N-1:0] saida_contador;
+	wire [3:0] saida_contador;
 	
 	
 	contador_m #(
 		.M(14),
-		.N(3)
+		.N(4)
 	) contador_maneiro (
     .clock(clock),
     .zera_as(),
