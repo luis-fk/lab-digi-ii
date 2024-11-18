@@ -22,7 +22,11 @@ module comporta_uc (
     parameter prepara         = 4'b0001;
     parameter mudaPosicao     = 4'b0010;
     parameter esperaIntervalo = 4'b0011;
+    parameter mudaPosicao2    = 4'b0100;
     parameter esperaFechar    = 4'b0100;
+    parameter mudaPosicao3    = 4'b0100;
+    parameter esperaIntervalo2 = 4'b0011;
+
 
     // Estado
     always @(posedge clock, posedge reset) begin

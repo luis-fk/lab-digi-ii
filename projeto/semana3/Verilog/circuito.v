@@ -8,6 +8,8 @@ module circuito (
     output wire       pwm,
     output wire       abrir_db,
     output wire       db_pertence_ao_intervalo,
+	 output wire       db_abrir_comporta,
+	 output wire 		 comando_db,
     // displays
     output wire [6:0] hex0_out,
     output wire [6:0] hex1_out,
@@ -88,12 +90,16 @@ module circuito (
         .muxPosicaoOut          (muxPosicaoOut          ),
         .valor_reg              (valor_reg              )
     );
+	 
+	 assign comando_db = comando;
 
     assign abrir_db = abrir;
 
     assign abrirComporta = perteceAoIntervalo | abrirComportaUc;
     
-    assign db_pertence_ao_intervalo = perteceAoIntervalo | abrirComportaUc;
+    assign db_pertence_ao_intervalo = perteceAoIntervalo;
+	 
+	 assign db_abrir_comporta = abrirComporta | abrir;
 
     circuito_uc UC (
         .clock              (clock              ),

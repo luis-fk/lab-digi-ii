@@ -16,7 +16,7 @@ module circuito_uc (
     parameter esperaDado   = 4'b0001;
     parameter armazenaDado = 4'b0010;
     parameter mudarPosicao = 4'b0011;
-
+	 
     // Estado
     always @(posedge clock, posedge reset) begin
         if (reset) 
@@ -38,7 +38,7 @@ module circuito_uc (
 
     // Saídas de controle
     always @(*) begin
-        abrir     = (Eatual == mudarPosicao) ? ~abrir : abrir;
+        abrir     = (Eatual == inicial     ) ? 1'b0 : (Eatual == mudarPosicao) ? ~abrir : abrir;
         enableReg = (Eatual == armazenaDado) ? 1'b1 : 1'b0;
 
         case (Eatual)

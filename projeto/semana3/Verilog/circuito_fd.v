@@ -128,7 +128,7 @@ module circuito_fd (
         .MUX_OUT(muxPosicaoOut)
     );
 
-    contador_m #( .M(5_000_000), .N(28) ) CONT_INTERVALO (
+    contador_m #( .M(1_000_000), .N(28) ) CONT_INTERVALO (
         .clock  (clock              ),
         .zera_as(                   ),
         .zera_s (zeraIntervalo      ),
